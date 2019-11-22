@@ -1,39 +1,45 @@
 package com.hackerman.dcalender;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
-import com.hackerman.dcalender.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        setContentView(R.layout.schedule);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Eksdi", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+        String[] timeStamps;
+        timeStamps = new String[24];
+        for (int i = 0; i < timeStamps.length; i++) {
+            if (i < 10) {
+                timeStamps[i] = "0" + i + ":00";
             }
-        });
+            else {
+                timeStamps[i] = i + ":00";
+            }
+        }
+
+        LinearLayout timeStampsView = (LinearLayout) findViewById(R.id.timeStamps);
+        for( int i = 0; i < timeStamps.length; i++ )
+        {
+            TextView textView = new TextView(this);
+            textView.setText(timeStamps[i]);
+            textView.setGravity(Gravity.RIGHT);
+            textView.setHeight(150);
+            timeStampsView.addView(textView);
+        }
+
+
+
     }
+
+
 }
+
