@@ -1,9 +1,13 @@
 package com.hackerman.dcalender;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -13,6 +17,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ViewGroup mainLayout;
+    private int yDelta;
+    ScrollViewHandler verticalScroll;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.schedule);
+
+        verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
+
+        mainLayout = (LinearLayout) findViewById(R.id.daySchedule1);
+        findViewById(R.id.button4).setOnTouchListener(onTouchListener());
+
+        setupTimestamps();
+
+        ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
+        mScrollView.post(new Runnable() {
+            public void run() {
+                ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
+                mScrollView.scrollTo(0, 8*150);
+            }
+        });
+        //Add tasks
+        LinearLayout day1View = (LinearLayout) findViewById(R.id.daySchedule1);
+
+
+
+    }
+
 
     public void onTaskClick(View view)
     {
@@ -73,26 +109,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.schedule);
 
-        setupTimestamps();
+    private OnTouchListener onTouchListener() {
+        return new OnTouchListener() {
 
-        ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
-        mScrollView.post(new Runnable() {
-            public void run() {
-                ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
-                mScrollView.scrollTo(0, 1200);
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+
+                final int y = (int) event.getRawY();
+
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+
+                    case MotionEvent.ACTION_DOWN:
+                        LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams)
+                                view.getLayoutParams();
+
+                        yDelta = y - lParams.topMargin;
+
+                        verticalScroll.setEnableScrolling(false);
+                        break;
+
+                    case MotionEvent.ACTION_UP: //Release touch
+                        Snackbar clickMessage = Snackbar.make(view, "ACTION_UP", Snackbar.LENGTH_SHORT);
+                        clickMessage.show();
+                        verticalScroll.setEnableScrolling(true);
+                        break;
+
+                    case MotionEvent.ACTION_MOVE: //Moving while holding down
+                        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view
+                                .getLayoutParams();
+                        layoutParams.topMargin = y - yDelta;
+                        layoutParams.bottomMargin = 0;
+                        view.setLayoutParams(layoutParams);
+                        break;
+                }
+
+                //mainLayout.invalidate();
+                return false;
             }
-        });
-        //Add tasks
-        LinearLayout day1View = (LinearLayout) findViewById(R.id.daySchedule1);
-
-
-
+        };
     }
+
 
 
 }

@@ -83,10 +83,10 @@ android:layout_height="match_parent">
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ScrollView
+        <com.hackerman.dcalender.ScrollViewHandler
             android:id="@+id/verticalScroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,9 +134,16 @@ android:layout_height="match_parent">
                     android:layout_weight="1"
                     android:orientation="vertical">
 
+                    <view
+                        android:id="@+id/task1"
+                        class="androidx.cardview.widget.CardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:backgroundTint="#747474"
+                        android:onClick="onTaskClick" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </com.hackerman.dcalender.ScrollViewHandler>
     </LinearLayout>
 
 </LinearLayout>
