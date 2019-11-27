@@ -2,4 +2,7 @@
     <string name="app_name">D Calender</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="MainActivity">Main activity</string>
+    <string name="subActivity">Sub Avtivity</string>
+    <string name="save_template">Save Template</string>
 </resources>
