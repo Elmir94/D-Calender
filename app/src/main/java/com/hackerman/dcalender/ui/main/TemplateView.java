@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -25,30 +26,33 @@ public class TemplateView extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     FloatingActionButton createNewTemplate;
-    ArrayList<Template> templates;
+
+//    ArrayList<Template> templates;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.template_view);
 
-        templates = new ArrayList<>();
+        recyclerView = findViewById(R.id.templateViewRc);
 
-        for (int i = 0; i < 100; i++){
-            Template template = new Template("Rensy #" +i, "Unknown");
-            templates.add(template);
-        }
+//        templates = new ArrayList<>();
+//
+//        for (int i = 0; i < 5; i++){
+//            Template template = new Template("Rensy #" +i, "Unknown");
+//            templates.add(template);
+//        }
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
 
         List<Template> templates = db.templateDao().getAlltemplates();
-        recyclerView = findViewById(R.id.templateViewRc);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TemplateAdapter(templates);
         recyclerView.setAdapter(adapter);
-        createNewTemplate =findViewById(R.id.NewTemplateFab);
 
+        createNewTemplate =findViewById(R.id.NewTemplateFab);
         createNewTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
