@@ -1,4 +1,4 @@
-package com.hackerman.dcalender.ui.main;
+package com.hackerman.dcalender.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hackerman.dcalender.R;
-import com.hackerman.dcalender.database.Template;
+import com.hackerman.dcalender.database.entity.Template;
 
 import java.util.List;
 
-class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
+public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
 
     List<Template> templates;
 

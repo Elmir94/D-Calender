@@ -1,12 +1,12 @@
-package com.hackerman.dcalender.database;
+package com.hackerman.dcalender.database.entity;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
-public
-class Template{
+@Entity(tableName = "Template")
+public class Template{
 
     public Template(String mainActivity, String subActivity){
         this.mainActivity = mainActivity;
@@ -22,9 +22,11 @@ class Template{
     @ColumnInfo(name = "subActivity")
     private String subActivity;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    if none primitive datatype ex objeckts
+//    @Embedded(prifix = "dataType_")
+
+
+    public void setId(int id) {this.id = id;}
 
     public int getId() {
         return id;
@@ -46,3 +48,4 @@ class Template{
         this.subActivity = subActivity;
     }
 }
+

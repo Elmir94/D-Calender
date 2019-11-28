@@ -10,10 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import com.hackerman.dcalender.MainActivity;
 import com.hackerman.dcalender.R;
 import com.hackerman.dcalender.database.AppDatabase;
-import com.hackerman.dcalender.database.Template;
+import com.hackerman.dcalender.database.entity.MainActivity;
+import com.hackerman.dcalender.database.entity.SubActivity;
+import com.hackerman.dcalender.database.entity.Template;
 
 public class CreateNewTemplate extends AppCompatActivity {
 
@@ -43,7 +44,13 @@ public class CreateNewTemplate extends AppCompatActivity {
                 //Log.d(TAG,"onClick firstName: "+firstName.getText().toString());
                 /*User user = new User(firstName.getText().toString(),lastName.getText().toString(),email.getText().toString());
                 db.userDao().insertAll(user);*/
+
+                //this saves a information to the old database version still needed for displaying activitis in RC-view
                 db.templateDao().insertAll(new Template(mainActivity.getText().toString(),subActivity.getText().toString()));
+
+                //New detabase model
+                db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
+                db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(),subActivity.getText().toString()));
                 //This is to go from CreateUser view -> Main view
                 startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
             }
