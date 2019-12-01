@@ -116,10 +116,30 @@ android:layout_height="match_parent">
 
 
                     <Button
+                        android:id="@+id/button9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100px"
+                        android:height="225px"
+                        android:background="@drawable/gradienttaskbg"
+                        android:onClick="onTaskClick"
+                        android:text="Training" />
+
+                    <Button
+                        android:id="@+id/button10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="200px"
+                        android:height="225px"
+                        android:background="@drawable/gradienttaskbg"
+                        android:onClick="onTaskClick"
+                        android:text="Training" />
+
+                    <Button
                         android:id="@+id/button4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1300px"
+                        android:layout_marginTop="500px"
                         android:height="225px"
                         android:background="@drawable/gradienttaskbg"
                         android:onClick="onTaskClick"
@@ -141,6 +161,16 @@ android:layout_height="match_parent">
                         android:layout_height="50dp"
                         android:backgroundTint="#747474"
                         android:onClick="onTaskClick" />
+
+                    <Button
+                        android:id="@+id/button8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="500px"
+                        android:height="225px"
+                        android:background="@drawable/gradienttaskbg"
+                        android:onClick="onTaskClick"
+                        android:text="Training" />
                 </LinearLayout>
             </LinearLayout>
         </com.hackerman.dcalender.ScrollViewHandler>

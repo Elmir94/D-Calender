@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -22,6 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private int yDelta;
     ScrollViewHandler verticalScroll;
 
+    //Values for scheduleviews
+    private int schedule_start = 100;
+    private int schedule_5min = 10; //Offset
+    private int schedule_hour = schedule_5min * 12;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +36,17 @@ public class MainActivity extends AppCompatActivity {
 
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
 
-        mainLayout = (LinearLayout) findViewById(R.id.daySchedule1);
-        findViewById(R.id.button4).setOnTouchListener(onTouchListener());
+        mainLayout = (LinearLayout) findViewById(R.id.schedule);
+        LinearLayout day1 = (LinearLayout) findViewById(R.id.daySchedule1);
+        LinearLayout day2 = (LinearLayout) findViewById(R.id.daySchedule2);
+        for(int i = 0; i < day1.getChildCount(); ++i) {
+            View nextChild = day1.getChildAt(i);
+            nextChild.setOnTouchListener(onTouchListener());
+        }
+        for(int i = 0; i < day2.getChildCount(); ++i) {
+            View nextChild = day2.getChildAt(i);
+            nextChild.setOnTouchListener(onTouchListener());
+        }
 
         setupTimestamps();
 
@@ -44,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         });
         //Add tasks
         LinearLayout day1View = (LinearLayout) findViewById(R.id.daySchedule1);
+
+        Button myButton = (Button) findViewById(R.id.button8);
 
 
 
@@ -101,10 +118,12 @@ public class MainActivity extends AppCompatActivity {
             line.setLayoutParams(params);
             line.setBackgroundColor(Color.DKGRAY);
             timeStampLinesView.addView(line);
+
+
         }
 
         View addBottomMargin = new View(this);
-        addBottomMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,97));
+        addBottomMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,100));
         timeStampsView.addView(addBottomMargin);
 
     }
@@ -121,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
+                    case MotionEvent.ACTION_BUTTON_PRESS:
+                        Snackbar clickMess = Snackbar.make(view, "Clicked on deep task view", Snackbar.LENGTH_SHORT);
+                        clickMess.show();
+
                     case MotionEvent.ACTION_DOWN:
                         LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams)
                                 view.getLayoutParams();
@@ -131,21 +154,31 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case MotionEvent.ACTION_UP: //Release touch
-                        Snackbar clickMessage = Snackbar.make(view, "ACTION_UP", Snackbar.LENGTH_SHORT);
-                        clickMessage.show();
+                        //Snackbar clickMessage = Snackbar.make(view, "Released touch", Snackbar.LENGTH_SHORT);
+                        //clickMessage.show();
+
                         verticalScroll.setEnableScrolling(true);
                         break;
 
                     case MotionEvent.ACTION_MOVE: //Moving while holding down
                         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view
                                 .getLayoutParams();
-                        layoutParams.topMargin = y - yDelta;
+                        layoutParams.topMargin = ((y - yDelta) / schedule_5min) * schedule_5min;                   //Snap to 5 min
                         layoutParams.bottomMargin = 0;
+
+                        if ( y < schedule_start) {
+                            Snackbar message = Snackbar.make(view, "Stop!", Snackbar.LENGTH_SHORT);
+                            message.show();
+                        }
+                        else if (y + layoutParams.height > findViewById(R.id.timeStamps).getHeight()) {
+                            layoutParams.topMargin = y - findViewById(R.id.timeStamps).getHeight();
+                        }
+
                         view.setLayoutParams(layoutParams);
                         break;
                 }
 
-                //mainLayout.invalidate();
+                mainLayout.invalidate();
                 return false;
             }
         };
