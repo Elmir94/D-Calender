@@ -26,8 +26,8 @@ public interface SubActivityDao {
     @Query("SELECT * FROM subActivity")
     List<SubActivity> getAllsubActivityis();
 
-    @Query("SELECT * FROM subActivity WHERE mainActivityId = :mainId")
-    public List<SubActivity> GetAllRelatedSubActivities(int mainId);
+    @Query("SELECT * FROM subActivity WHERE mainActivityName = :mainActivityName")
+    public List<SubActivity> GetAllRelatedSubActivities(String mainActivityName);
 
 //    @Query("SELECT * FROM subActivity where mainActivityId = "1"" )
 //    List<SubActivity> getSubActivityName();

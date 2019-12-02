@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -128,7 +129,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
 
                 /*  if group item clicked */
                 if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
-                    OpenAddChildDialog(AllCategory.get(groupPosition));
+                  //  OpenAddChildDialog(AllCategory.get(groupPosition));
                 }
 
                 return false;
@@ -179,48 +180,48 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         AddParentDialog.show();
     }
 
-    public void OpenAddChildDialog(MainActivity cat){
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-        View mView = getLayoutInflater().inflate(R.layout.add_category_dialog, null);
-        TextView DialogTitle=(TextView)mView.findViewById(R.id.dialog_title);
-        final TextView NewCattv=(TextView) mView.findViewById(R.id.new_cat_title);
-        final int CatId=cat.getId();
-        Button Ok=(Button) mView.findViewById(R.id.DialogOk);
-        Button Cancel=(Button) mView.findViewById(R.id.DialogCancel);
-        DialogTitle.setText("Adding Sub Activity Item to "+cat.getMainActivityName()+" ");
-        Ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(NewCattv.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(),"Item Title Can't be Empty",Toast.LENGTH_LONG).show();
-
-                }else{
-                    try{
-                        db.subActivityDao().insertAll(new SubActivity(CatId,NewCattv.getText().toString()));
-                        Toast.makeText(getApplicationContext(),"New Sub Activity Item added Successfully",Toast.LENGTH_LONG).show();
-                        AddChildDialog.dismiss();
-                        AddChildDialog.cancel();
-                        PopulateData();
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(),"Failed to Add",Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            }
-        });
-        Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddChildDialog.dismiss();
-                AddChildDialog.cancel();
-            }
-        });
-
-        mBuilder.setView(mView);
-        AddChildDialog = mBuilder.create();
-        AddChildDialog.show();
-
-    }
+//    public void OpenAddChildDialog(MainActivity cat){
+//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
+//        View mView = getLayoutInflater().inflate(R.layout.add_category_dialog, null);
+//        TextView DialogTitle=(TextView)mView.findViewById(R.id.dialog_title);
+//        final TextView NewCattv=(TextView) mView.findViewById(R.id.new_cat_title);
+//        final int CatId=cat.getId();
+//        Button Ok=(Button) mView.findViewById(R.id.DialogOk);
+//        Button Cancel=(Button) mView.findViewById(R.id.DialogCancel);
+//        DialogTitle.setText("Adding Sub Activity Item to "+cat.getMainActivityName()+" ");
+//        Ok.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(NewCattv.getText().toString().isEmpty()){
+//                    Toast.makeText(getApplicationContext(),"Item Title Can't be Empty",Toast.LENGTH_LONG).show();
+//
+//                }else{
+//                    try{
+//                        db.subActivityDao().insertAll(new SubActivity(CatId,NewCattv.getText().toString()));
+//                        Toast.makeText(getApplicationContext(),"New Sub Activity Item added Successfully",Toast.LENGTH_LONG).show();
+//                        AddChildDialog.dismiss();
+//                        AddChildDialog.cancel();
+//                        PopulateData();
+//                    }catch (Exception e){
+//                        Toast.makeText(getApplicationContext(),"Failed to Add",Toast.LENGTH_LONG).show();
+//                    }
+//
+//                }
+//            }
+//        });
+//        Cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AddChildDialog.dismiss();
+//                AddChildDialog.cancel();
+//            }
+//        });
+//
+//        mBuilder.setView(mView);
+//        AddChildDialog = mBuilder.create();
+//        AddChildDialog.show();
+//
+//    }
 
     public void OpenEditParentDialog( MainActivity cat){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -329,7 +330,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         HashMap<String,List<SubActivity>> MyDataHashMap= new HashMap<String, List<SubActivity>>();;
         List<MainActivity> MyCategries=db.mainActivityDao().getAllmainActivities();
         for (MainActivity cat:MyCategries){
-            List<SubActivity> child_items=db.subActivityDao().GetAllRelatedSubActivities(cat.getId());
+            List<SubActivity> child_items=db.subActivityDao().GetAllRelatedSubActivities(cat.getMainActivityName());
             MyDataHashMap.put(cat.getMainActivityName(),child_items);
 
         }
@@ -389,7 +390,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
 
             case 5:
 
-                OpenAddChildDialog(AllCategory.get(group));
+           //     OpenAddChildDialog(AllCategory.get(group));
 
                 break;
 

@@ -50,7 +50,7 @@ public class CreateNewTemplate extends AppCompatActivity {
 
                 //New detabase model
                 db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
-                db.subActivityDao().insertAll(new SubActivity(mainActivity.getId(),subActivity.getText().toString()));
+                db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(),subActivity.getText().toString()));
                 //This is to go from CreateUser view -> Main view
                 startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
             }

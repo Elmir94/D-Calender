@@ -12,17 +12,16 @@ public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @ForeignKey(entity = MainActivity.class, parentColumns = "id" , childColumns = "mainActivityId", onDelete = CASCADE)
-    private int mainActivityId;
+    @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
+    private String mainActivityName;
     @ColumnInfo(name = "subActivityName")
     private String subActivityName;
 
-    public SubActivity(int mainActivityId, String subActivityName) {
-        this.mainActivityId = mainActivityId;
+    public SubActivity(String mainActivityName, String subActivityName) {
+        this.mainActivityName = mainActivityName;
         this.subActivityName = subActivityName;
     }
 
-    // TODO: 28/11/2019 add the rest of the relevent columns
 
 
     public int getId() {
@@ -33,20 +32,12 @@ public class SubActivity {
         this.id = id;
     }
 
-    public int getMainActivityId() {
-        return mainActivityId;
+    public String getMainActivityName() {
+        return mainActivityName;
     }
 
-    public void setMainActivityId(int mainActivityId) {
-        this.mainActivityId = mainActivityId;
-    }
-
-    public int getMainActivityName() {
-        return mainActivityId;
-    }
-
-    public void setMainActivityName(int mainActivityId) {
-        this.mainActivityId = mainActivityId;
+    public void setMainActivityName(String mainActivityName) {
+        this.mainActivityName = mainActivityName;
     }
 
     public String getSubActivityName() {
@@ -56,4 +47,13 @@ public class SubActivity {
     public void setSubActivityName(String subActivityName) {
         this.subActivityName = subActivityName;
     }
+
+
+    //public String getMainActivityName() {
+    //    return mainActivityName;
+    //}
+
+
+
+
 }

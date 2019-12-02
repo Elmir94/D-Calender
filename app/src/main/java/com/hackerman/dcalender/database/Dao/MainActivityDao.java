@@ -24,5 +24,7 @@ public interface MainActivityDao {
 
     @Update
     void update(MainActivity... mainActivities);
+//    @Query("Update mainActivity set mainActivityName = :newMainActivityName where id = :id")
+//    int updateTour(int id, String newMainActivityName);
 
 }

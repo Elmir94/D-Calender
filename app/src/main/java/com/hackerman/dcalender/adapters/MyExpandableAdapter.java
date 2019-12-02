@@ -133,14 +133,14 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
         final Context ctx=this.ctx;
         final int grp=groupPosition;
         final int child=childPosition;
-        ImageView AddNewChild=(ImageView) convertView.findViewById(R.id.AddNewChild);
+        //ImageView AddNewChild=(ImageView) convertView.findViewById(R.id.AddNewChild);
         ImageView DeleteImg=(ImageView)convertView.findViewById(R.id.childdelete);
         ImageView UpdateImg=(ImageView)convertView.findViewById(R.id.childupdate);
-        if(childPosition==(getChildrenCount(groupPosition)-1)){
-            AddNewChild.setVisibility(View.VISIBLE);
-        }else{
-            AddNewChild.setVisibility(View.GONE);
-        }
+//        if(childPosition==(getChildrenCount(groupPosition)-1)){
+//            AddNewChild.setVisibility(View.VISIBLE);
+//        }else{
+//            AddNewChild.setVisibility(View.GONE);
+//        }
 
         UpdateImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,12 +157,12 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        AddNewChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myListManipulate.ManipulateAction(5,grp,child);
-            }
-        });
+//        AddNewChild.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                myListManipulate.ManipulateAction(5,grp,child);
+//            }
+//        });
 
 
         return convertView;
