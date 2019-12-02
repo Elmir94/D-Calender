@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.TemplateView">
+    <ExpandableListView
+        android:id="@+id/expandablelist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@drawable/group_indicator"
+        android:dividerHeight="0.5dp"
+        android:divider="#dad9d9"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="100dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/add_icon_no_borders"
+        app:borderWidth="0dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_edit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="100dp"
+        android:backgroundTint="#ffffff"
+        android:src="@drawable/edite_ic"
+        app:borderWidth="0dp"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
