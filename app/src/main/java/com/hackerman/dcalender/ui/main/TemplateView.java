@@ -75,14 +75,14 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
 
 
 
-        AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OpenAddParentDialog();
-
-
-            }
-        });
+//        AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                OpenAddParentDialog();
+//
+//
+//            }
+//        });
         EditMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +98,12 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
             }
         });
 
-
+        AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TemplateView.this, CreateNewTemplate.class));
+            }
+        });
 
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
