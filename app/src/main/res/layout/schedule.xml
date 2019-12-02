@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-android:layout_height="match_parent">
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -86,7 +88,7 @@ android:layout_height="match_parent">
         <com.hackerman.dcalender.ScrollViewHandler
             android:id="@+id/verticalScroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,7 +98,7 @@ android:layout_height="match_parent">
                 <LinearLayout
                     android:id="@+id/timeStamps"
                     android:layout_width="45dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                 </LinearLayout>
@@ -104,7 +106,7 @@ android:layout_height="match_parent">
                 <LinearLayout
                     android:id="@+id/timeStampLines"
                     android:layout_width="15dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
@@ -122,7 +124,6 @@ android:layout_height="match_parent">
                         android:layout_marginTop="100px"
                         android:height="225px"
                         android:background="@drawable/gradienttaskbg"
-                        android:onClick="onTaskClick"
                         android:text="Training" />
 
                     <Button
@@ -132,7 +133,6 @@ android:layout_height="match_parent">
                         android:layout_marginTop="200px"
                         android:height="225px"
                         android:background="@drawable/gradienttaskbg"
-                        android:onClick="onTaskClick"
                         android:text="Training" />
 
                     <Button
@@ -141,7 +141,6 @@ android:layout_height="match_parent">
                         android:layout_height="wrap_content"
                         android:height="225px"
                         android:background="@drawable/gradienttaskbg"
-                        android:onClick="onTaskClick"
                         android:text="Training" />
 
                 </LinearLayout>
@@ -151,28 +150,11 @@ android:layout_height="match_parent">
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical" />
 
-                    <view
-                        android:id="@+id/task1"
-                        class="androidx.cardview.widget.CardView"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:backgroundTint="#747474"
-                        android:onClick="onTaskClick" />
-
-                    <Button
-                        android:id="@+id/button8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="500px"
-                        android:height="225px"
-                        android:background="@drawable/gradienttaskbg"
-                        android:onClick="onTaskClick"
-                        android:text="Training" />
-                </LinearLayout>
             </LinearLayout>
         </com.hackerman.dcalender.ScrollViewHandler>
+
     </LinearLayout>
 
 </LinearLayout>
