@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mainLayout = (LinearLayout) findViewById(R.id.schedule);
         LinearLayout day1 = (LinearLayout) findViewById(R.id.daySchedule1);
         LinearLayout day2 = (LinearLayout) findViewById(R.id.daySchedule2);
+        //Listen to touch on objects
         for(int i = 0; i < day1.getChildCount(); ++i) {
             View nextChild = day1.getChildAt(i);
             nextChild.setOnTouchListener(onTouchListener());
@@ -108,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setText(timeStamps[i]);
             textView.setGravity(Gravity.TOP | Gravity.END);
-            textView.setHeight(150);
+            textView.setHeight(schedule_hour);
             textView.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
             timeStampsView.addView(textView);
 
             View line = new View(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
-            params.setMargins(10,25,0,120);
+            params.setMargins(10,schedule_hour / 6,0,schedule_hour - (schedule_hour / 6));
             line.setLayoutParams(params);
             line.setBackgroundColor(Color.DKGRAY);
             timeStampLinesView.addView(line);
@@ -122,8 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
         View addBottomMargin = new View(this);
-        addBottomMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,100));
+        addBottomMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,75));
         timeStampsView.addView(addBottomMargin);
 
     }
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                         LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams)
                                 view.getLayoutParams();
 
-                        yDelta = y - lParams.topMargin;
+                        yDelta = (int) view.getY() - y;
 
                         verticalScroll.setEnableScrolling(false);
                         break;
@@ -161,20 +163,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case MotionEvent.ACTION_MOVE: //Moving while holding down
-                        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view
-                                .getLayoutParams();
-                        layoutParams.topMargin = ((y - yDelta) / schedule_5min) * schedule_5min;                   //Snap to 5 min
-                        layoutParams.bottomMargin = 0;
+                        //LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view
+                        //        .getLayoutParams();
+                        //layoutParams.topMargin = ((y - yDelta) / schedule_hour) * schedule_hour;                   //Snap to 5 min
+                        //layoutParams.bottomMargin = 0;
 
-                        if ( y < schedule_start) {
-                            Snackbar message = Snackbar.make(view, "Stop!", Snackbar.LENGTH_SHORT);
-                            message.show();
-                        }
-                        else if (y + layoutParams.height > findViewById(R.id.timeStamps).getHeight()) {
-                            layoutParams.topMargin = y - findViewById(R.id.timeStamps).getHeight();
-                        }
+                        int setPos = ((y + yDelta) / schedule_hour) * schedule_hour;
+                        view.animate()
+                                .y(setPos)
+                                .setDuration(0)
+                                .start();
 
-                        view.setLayoutParams(layoutParams);
+
+                        //view.setLayoutParams(layoutParams);
                         break;
                 }
 
