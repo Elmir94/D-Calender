@@ -39,7 +39,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
     private static final String TAG = "TemplateView";
 
     FloatingActionButton AddNewMainActivity;
-    FloatingActionButton EditMainActivity;
+    //FloatingActionButton EditMainActivity;
 
     ExpandableListView expandableListView;
     MyExpandableAdapter myExpandableAdapter;
@@ -72,7 +72,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         MainActivityActionStatus=false;
         PopulateData();
         AddNewMainActivity=findViewById(R.id.fab_add);
-        EditMainActivity=findViewById(R.id.fab_edit);
+        //EditMainActivity=findViewById(R.id.fab_edit);
 
 
 
@@ -84,20 +84,20 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
 //
 //            }
 //        });
-        EditMainActivity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(MainActivityActionStatus){
-                    MainActivityActionStatus=false;
-                    EditMainActivity.setRippleColor(Color.parseColor("#ffffff"));
-
-                }else{
-                    MainActivityActionStatus=true;
-                    EditMainActivity.setRippleColor(Color.parseColor("#e2e2e2"));
-                }
-                PopulateData();
-            }
-        });
+//        EditMainActivity.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(MainActivityActionStatus){
+//                    MainActivityActionStatus=false;
+//                    EditMainActivity.setRippleColor(Color.parseColor("#ffffff"));
+//
+//                }else{
+//                    MainActivityActionStatus=true;
+//                    EditMainActivity.setRippleColor(Color.parseColor("#e2e2e2"));
+//                }
+//                PopulateData();
+//            }
+//        });
 
         AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override

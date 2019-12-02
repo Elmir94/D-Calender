@@ -95,8 +95,8 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
             DeleteImg.setVisibility(View.VISIBLE);
             UpdateImg.setVisibility(View.VISIBLE);
         }else{
-            DeleteImg.setVisibility(View.GONE);
-            UpdateImg.setVisibility(View.GONE);
+            DeleteImg.setVisibility(View.VISIBLE);
+            UpdateImg.setVisibility(View.VISIBLE);
         }
         tv.setText(Title);
 
