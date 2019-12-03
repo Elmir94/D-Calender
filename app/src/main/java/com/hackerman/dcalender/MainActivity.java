@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -35,19 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
 
-        mainLayout = (LinearLayout) findViewById(R.id.schedule);
-        LinearLayout day1 = (LinearLayout) findViewById(R.id.daySchedule1);
-        LinearLayout day2 = (LinearLayout) findViewById(R.id.daySchedule2);
-        //Listen to touch on objects
-        for(int i = 0; i < day1.getChildCount(); ++i) {
-            View nextChild = day1.getChildAt(i);
-            nextChild.setOnTouchListener(onTouchListener());
-        }
-        for(int i = 0; i < day2.getChildCount(); ++i) {
-            View nextChild = day2.getChildAt(i);
-            nextChild.setOnTouchListener(onTouchListener());
-        }
-
+        initTouchListeners();
         setupTimestamps();
         //setupTasks();
 
@@ -71,10 +60,44 @@ public class MainActivity extends AppCompatActivity {
         clickMessage.show();
     }
 
+    public void addTask (View view) {
+        Button Task = new Button(this);
+        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3*schedule_hour));
+        Task.setLayoutParams(parameters);
+        Task.setBackgroundResource(R.drawable.gradienttaskbg);
+        LinearLayout layout = (LinearLayout) findViewById(view.getId());
+        layout.addView(Task);
+
+        Task.animate()
+                //.y((int)schedule.getY())
+                .y(500)
+                .setDuration(0)
+                .start();
+
+        initTouchListeners();
+
+
+    }
+
     public void openSidebar(View view)
     {
         Snackbar clickMessage = Snackbar.make(view, "Opening sidebar", Snackbar.LENGTH_SHORT);
         clickMessage.show();
+    }
+
+    private void initTouchListeners () {
+        mainLayout = (LinearLayout) findViewById(R.id.schedule);
+        LinearLayout day1 = (LinearLayout) findViewById(R.id.daySchedule1);
+        LinearLayout day2 = (LinearLayout) findViewById(R.id.daySchedule2);
+        //Listen to touch on objects
+        for(int i = 0; i < day1.getChildCount(); ++i) {
+            View nextChild = day1.getChildAt(i);
+            nextChild.setOnTouchListener(onTouchListener());
+        }
+        for(int i = 0; i < day2.getChildCount(); ++i) {
+            View nextChild = day2.getChildAt(i);
+            nextChild.setOnTouchListener(onTouchListener());
+        }
     }
 
     private void setupTimestamps(){
@@ -98,9 +121,9 @@ public class MainActivity extends AppCompatActivity {
         topMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour - 30));
         timeStampsView.addView(topMargin);
 
-        View addTopMarginLines = new View(this);
-        addTopMarginLines.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour));
-        timeStampLinesView.addView(addTopMarginLines);
+        //View addTopMarginLines = new View(this);
+        //addTopMarginLines.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour));
+        //timeStampLinesView.addView(addTopMarginLines);
 
 
         for( int i = 0; i < timeStamps.length; i++ )
@@ -135,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             d2line.setBackgroundColor(Color.DKGRAY);
             d2Schedule.addView(d2line);
 
-            int yPos = (schedule_hour * i) - (5 * i);
+            int yPos = (schedule_hour * (i+1)) - (5 * i); //(i+1 for top margin)
             line.animate()
                     .y(yPos)
                     .setDuration(0)
@@ -164,10 +187,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupTasks() {
         //Fetch from database
 
-        //Button Task = new Button(this);
-        //LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3*schedule_hour));
-        //Task.setLayoutParams(parameters);
-        //Task.setBackgroundResource(R.drawable.gradienttaskbg);
+
+
 
         //android:id="@+id/button9"
         //android:layout_width="match_parent"
@@ -187,46 +208,58 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
 
-                final int y = (int) event.getRawY();
 
-                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    final int y = (int) event.getRawY();
 
-                    case MotionEvent.ACTION_DOWN:
+                    switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
-                        moved = false;
-                        yDelta = (int) view.getY() - y;
+                        case MotionEvent.ACTION_DOWN:
 
-                        verticalScroll.setEnableScrolling(false);
-                        break;
+                            moved = false;
+                            yDelta = (int) view.getY() - y;
 
-                    case MotionEvent.ACTION_UP: //Release touch
-                        //Snackbar clickMessage = Snackbar.make(view, "startPos: " + startPos + "  view.getY(): "+ view.getY(), Snackbar.LENGTH_SHORT);
-                        //clickMessage.show();
+                            verticalScroll.setEnableScrolling(false);
+                            break;
 
-                        if (!moved) {
-                            onTaskClick(view);
-                        }
+                        case MotionEvent.ACTION_UP: //Release touch
+                            //Snackbar clickMessage = Snackbar.make(view, "startPos: " + startPos + "  view.getY(): "+ view.getY(), Snackbar.LENGTH_SHORT);
+                            //clickMessage.show();
 
-                        verticalScroll.setEnableScrolling(true);
-                        break;
+                            if (!moved) {
+                                onTaskClick(view);
+                            } else {
+                                view.animate()
+                                        .x(0)
+                                        .setDuration(0)
+                                        .start();
+                            }
 
-                    case MotionEvent.ACTION_MOVE: //Moving while holding down
+                            verticalScroll.setEnableScrolling(true);
+                            break;
 
-                        int snapMetrics = schedule_hour / 4; // 15min
-                        int setPos = ((y + yDelta) / snapMetrics) * snapMetrics;
+                        case MotionEvent.ACTION_MOVE: //Moving while holding down
 
-                        if (setPos >= schedule_hour && setPos <= schedule_hour * 25 - view.getHeight()) {
+                            int snapMetrics = schedule_5min; // 15min
+                            int setPos = ((y + yDelta) / snapMetrics) * snapMetrics;
                             moved = true;
+
+                            if (setPos < schedule_hour) {
+                                setPos = schedule_hour;
+                            } else if (setPos > schedule_hour * 25 - view.getHeight()) {
+                                setPos = schedule_hour * 25 - view.getHeight();
+                            }
+
                             view.animate()
+                                    .x(10)
                                     .y(setPos)
                                     .setDuration(0)
                                     .start();
-                        }
 
 
-                        //view.setLayoutParams(layoutParams);
-                        break;
-                }
+                            //view.setLayoutParams(layoutParams);
+                            break;
+                    }
+
 
                 mainLayout.invalidate();
                 return false;
