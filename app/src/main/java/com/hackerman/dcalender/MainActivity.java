@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -25,14 +26,17 @@ public class MainActivity extends AppCompatActivity {
     private boolean moved = false;
 
     //Values for scheduleviews
-    private int schedule_5min = 15; //Offset
-    private int schedule_hour = schedule_5min * 12;
+    private final int schedule_5min = 15;                   //Offset
+    private final int schedule_hour = schedule_5min * 12;
+    private int schedule_snap_grid = 4;                     //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
+
+        schedule_snap_grid = schedule_hour / schedule_snap_grid;
 
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
 
@@ -48,33 +52,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Add tasks
-        LinearLayout day1View = (LinearLayout) findViewById(R.id.daySchedule1);
 
     }
 
 
     public void onTaskClick(View view)
     {
-
         Snackbar clickMessage = Snackbar.make(view, "Redirected to deep task view", Snackbar.LENGTH_SHORT);
         clickMessage.show();
     }
 
-    public void addTask (View view) {
+    public void addTask (View view, int yPos) {
+        yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
         Button Task = new Button(this);
-        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,3*schedule_hour));
+        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour));
         Task.setLayoutParams(parameters);
         Task.setBackgroundResource(R.drawable.gradienttaskbg);
-        LinearLayout layout = (LinearLayout) findViewById(view.getId());
+        Task.setText("Task");
+        FrameLayout layout = (FrameLayout) findViewById(view.getId());
         layout.addView(Task);
 
         Task.animate()
-                //.y((int)schedule.getY())
-                .y(500)
+                .y(yPos)
                 .setDuration(0)
                 .start();
 
-        initTouchListeners();
+        Task.setOnTouchListener(onTouchListener());
 
 
     }
@@ -87,9 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTouchListeners () {
         mainLayout = (LinearLayout) findViewById(R.id.schedule);
-        LinearLayout day1 = (LinearLayout) findViewById(R.id.daySchedule1);
-        LinearLayout day2 = (LinearLayout) findViewById(R.id.daySchedule2);
+        FrameLayout day1 = (FrameLayout) findViewById(R.id.daySchedule1);
+        FrameLayout day2 = (FrameLayout) findViewById(R.id.daySchedule2);
         //Listen to touch on objects
+        day1.setOnTouchListener(onTouchListener());
+        day2.setOnTouchListener(onTouchListener());
         for(int i = 0; i < day1.getChildCount(); ++i) {
             View nextChild = day1.getChildAt(i);
             nextChild.setOnTouchListener(onTouchListener());
@@ -114,16 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayout timeStampsView = (LinearLayout) findViewById(R.id.timeStamps);
         LinearLayout timeStampLinesView = (LinearLayout) findViewById(R.id.timeStampLines);
-        LinearLayout d1Schedule = (LinearLayout) findViewById(R.id.daySchedule1);
-        LinearLayout d2Schedule = (LinearLayout) findViewById(R.id.daySchedule2);
+        FrameLayout d1Schedule = (FrameLayout) findViewById(R.id.daySchedule1);
+        FrameLayout d2Schedule = (FrameLayout) findViewById(R.id.daySchedule2);
 
         View topMargin = new View(this);
         topMargin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour - 30));
         timeStampsView.addView(topMargin);
-
-        //View addTopMarginLines = new View(this);
-        //addTopMarginLines.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour));
-        //timeStampLinesView.addView(addTopMarginLines);
 
 
         for( int i = 0; i < timeStamps.length; i++ )
@@ -139,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
             //Lines
             View line = new View(this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
-            //params.setMargins(10,0,0,schedule_hour - 5);
+            params.setMargins(10,0,0,0);
             line.setLayoutParams(params);
             line.setBackgroundColor(Color.DKGRAY);
             timeStampLinesView.addView(line);
@@ -148,14 +149,14 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout.LayoutParams d1params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
             //params.setMargins(10,0,0,schedule_hour - 5);
             d1line.setLayoutParams(d1params);
-            d1line.setBackgroundColor(Color.DKGRAY);
+            d1line.setBackgroundColor(Color.LTGRAY);
             d1Schedule.addView(d1line);
 
             View d2line = new View(this);
             LinearLayout.LayoutParams d2params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
             //params.setMargins(10,0,0,schedule_hour - 5);
             d2line.setLayoutParams(d2params);
-            d2line.setBackgroundColor(Color.DKGRAY);
+            d2line.setBackgroundColor(Color.LTGRAY);
             d2Schedule.addView(d2line);
 
             int yPos = (schedule_hour * (i+1)) - (5 * i); //(i+1 for top margin)
@@ -163,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
                     .y(yPos)
                     .setDuration(0)
                     .start();
+
+            yPos = yPos + (i*5);
 
             d1line.animate()
                     .y(yPos)
@@ -200,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         //android:text="Training" />
     }
 
-
     private OnTouchListener onTouchListener() {
         return new OnTouchListener() {
 
@@ -208,9 +210,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
 
+                final int y = (int) event.getRawY();
 
-                    final int y = (int) event.getRawY();
+                //When Schedule
+                if (view.getId() == R.id.daySchedule1 || view.getId() == R.id.daySchedule2) {
 
+                    if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+                        addTask (view, (int) event.getY());
+                    }
+                }
+
+                //When Task
+                else {
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
                         case MotionEvent.ACTION_DOWN:
@@ -239,13 +250,12 @@ public class MainActivity extends AppCompatActivity {
 
                         case MotionEvent.ACTION_MOVE: //Moving while holding down
 
-                            int snapMetrics = schedule_5min; // 15min
-                            int setPos = ((y + yDelta) / snapMetrics) * snapMetrics;
+                            int setPos = ((y + yDelta) / schedule_snap_grid) * schedule_snap_grid;
                             moved = true;
 
                             if (setPos < schedule_hour) {
                                 setPos = schedule_hour;
-                            } else if (setPos > schedule_hour * 25 - view.getHeight()) {
+                            } else if (setPos >= schedule_hour * 25 - view.getHeight()) {
                                 setPos = schedule_hour * 25 - view.getHeight();
                             }
 
@@ -259,14 +269,13 @@ public class MainActivity extends AppCompatActivity {
                             //view.setLayoutParams(layoutParams);
                             break;
                     }
-
+                }
 
                 mainLayout.invalidate();
-                return false;
+                return true;
             }
         };
     }
-
 
 
 }

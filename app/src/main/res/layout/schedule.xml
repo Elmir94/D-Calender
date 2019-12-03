@@ -109,49 +109,20 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/daySchedule1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="addTask"
                     android:orientation="vertical">
 
+                </FrameLayout>
 
-                    <Button
-                        android:id="@+id/button9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="100px"
-                        android:height="225px"
-                        android:background="@drawable/gradienttaskbg"
-                        android:text="Training" />
-
-                    <Button
-                        android:id="@+id/button10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="200px"
-                        android:height="225px"
-                        android:background="@drawable/gradienttaskbg"
-                        android:text="Training" />
-
-                    <Button
-                        android:id="@+id/button4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:height="225px"
-                        android:background="@drawable/gradienttaskbg"
-                        android:text="Training" />
-
-                </LinearLayout>
-
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/daySchedule2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="addTask"
                     android:orientation="vertical" />
 
             </LinearLayout>
