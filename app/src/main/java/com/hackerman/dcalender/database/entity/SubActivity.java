@@ -12,8 +12,10 @@ public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
     private String mainActivityName;
+
     @ColumnInfo(name = "subActivityName")
     private String subActivityName;
 

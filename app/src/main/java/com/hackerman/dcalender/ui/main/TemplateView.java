@@ -232,17 +232,18 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         Button Cancel=(Button) mView.findViewById(R.id.DialogCancel);
         DialogTitle.setText("Editing Main Activity");
         NewCattv.setText(cat.getMainActivityName().toString());
-        final MainActivity MainActivityToUpdate=cat;
+        final String oldCat=cat.getMainActivityName();
         Ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(NewCattv.getText().toString().isEmpty()){
+                if(NewCattv.getText().toString().trim().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Main Activity Name Can't be Empty",Toast.LENGTH_LONG).show();
 
                 }else{
                     try{
-                        MainActivityToUpdate.setMainActivityName(NewCattv.getText().toString());
-                        db.mainActivityDao().update(MainActivityToUpdate);
+                        String newCat=NewCattv.getText().toString().trim();
+                        db.mainActivityDao().update(oldCat,newCat);
+                        db.mainActivityDao().updaterealtedSubs(oldCat,newCat);
                         Toast.makeText(getApplicationContext(),"Main Activity Edited Successfully",Toast.LENGTH_LONG).show();
                         EditParentDialog.dismiss();
                         EditParentDialog.cancel();

@@ -22,8 +22,12 @@ public interface MainActivityDao {
     @Delete
     void delete(MainActivity... mainActivities);
 
-    @Update
-    void update(MainActivity... mainActivities);
+    @Query("Update mainActivity set mainActivityName = :newMainActivityName where mainActivityName = :oldMinActivityName")
+    void update(String oldMinActivityName,String newMainActivityName);
+
+    @Query("Update subActivity set mainActivityName = :newMainActivityName where mainActivityName = :oldMinActivityName")
+    void updaterealtedSubs(String oldMinActivityName,String newMainActivityName);
+
 //    @Query("Update mainActivity set mainActivityName = :newMainActivityName where id = :id")
 //    int updateTour(int id, String newMainActivityName);
 
