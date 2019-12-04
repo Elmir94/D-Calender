@@ -1,50 +1,34 @@
 package com.hackerman.dcalender.ui.main;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hackerman.dcalender.R;
-import com.hackerman.dcalender.adapters.MainActivityAdapter;
 import com.hackerman.dcalender.adapters.MyExpandableAdapter;
-import com.hackerman.dcalender.adapters.SubActivityAdapter;
-import com.hackerman.dcalender.adapters.TemplateAdapter;
 import com.hackerman.dcalender.database.AppDatabase;
 import com.hackerman.dcalender.database.entity.MainActivity;
 import com.hackerman.dcalender.database.entity.SubActivity;
-import com.hackerman.dcalender.database.entity.Template;
-import com.hackerman.dcalender.adapters.MyExpandableAdapter;
 import java.util.HashMap;
 import java.util.List;
-
-
 
 public class TemplateView extends AppCompatActivity implements MyExpandableAdapter.MyListManipulate {
 
     private static final String TAG = "TemplateView";
 
     FloatingActionButton AddNewMainActivity;
-    //FloatingActionButton EditMainActivity;
-
     ExpandableListView expandableListView;
     MyExpandableAdapter myExpandableAdapter;
     AlertDialog AddParentDialog;
-    AlertDialog AddChildDialog;
     AppDatabase db;
     HashMap<String,List<SubActivity>> MyData;
     List<MainActivity> AllCategory;
@@ -72,33 +56,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         MainActivityActionStatus=false;
         PopulateData();
         AddNewMainActivity=findViewById(R.id.fab_add);
-        //EditMainActivity=findViewById(R.id.fab_edit);
-
-
-
-//        AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                OpenAddParentDialog();
-//
-//
-//            }
-//        });
-//        EditMainActivity.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(MainActivityActionStatus){
-//                    MainActivityActionStatus=false;
-//                    EditMainActivity.setRippleColor(Color.parseColor("#ffffff"));
-//
-//                }else{
-//                    MainActivityActionStatus=true;
-//                    EditMainActivity.setRippleColor(Color.parseColor("#e2e2e2"));
-//                }
-//                PopulateData();
-//            }
-//        });
-
         AddNewMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,8 +82,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                 int itemType = ExpandableListView.getPackedPositionType(packedPosition);
                 int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
                 int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
-
-
                 /*  if group item clicked */
                 if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
                   //  OpenAddChildDialog(AllCategory.get(groupPosition));
@@ -135,9 +90,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                 return false;
             }
         });
-
-
-
     }
 
     public void OpenAddParentDialog(){
@@ -162,7 +114,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                         PopulateData();
                     }catch (Exception e){
                         Toast.makeText(getApplicationContext(),"Failed to Add",Toast.LENGTH_LONG).show();
-
                     }
                 }
             }
@@ -179,49 +130,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         AddParentDialog = mBuilder.create();
         AddParentDialog.show();
     }
-
-//    public void OpenAddChildDialog(MainActivity cat){
-//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
-//        View mView = getLayoutInflater().inflate(R.layout.add_category_dialog, null);
-//        TextView DialogTitle=(TextView)mView.findViewById(R.id.dialog_title);
-//        final TextView NewCattv=(TextView) mView.findViewById(R.id.new_cat_title);
-//        final int CatId=cat.getId();
-//        Button Ok=(Button) mView.findViewById(R.id.DialogOk);
-//        Button Cancel=(Button) mView.findViewById(R.id.DialogCancel);
-//        DialogTitle.setText("Adding Sub Activity Item to "+cat.getMainActivityName()+" ");
-//        Ok.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(NewCattv.getText().toString().isEmpty()){
-//                    Toast.makeText(getApplicationContext(),"Item Title Can't be Empty",Toast.LENGTH_LONG).show();
-//
-//                }else{
-//                    try{
-//                        db.subActivityDao().insertAll(new SubActivity(CatId,NewCattv.getText().toString()));
-//                        Toast.makeText(getApplicationContext(),"New Sub Activity Item added Successfully",Toast.LENGTH_LONG).show();
-//                        AddChildDialog.dismiss();
-//                        AddChildDialog.cancel();
-//                        PopulateData();
-//                    }catch (Exception e){
-//                        Toast.makeText(getApplicationContext(),"Failed to Add",Toast.LENGTH_LONG).show();
-//                    }
-//
-//                }
-//            }
-//        });
-//        Cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AddChildDialog.dismiss();
-//                AddChildDialog.cancel();
-//            }
-//        });
-//
-//        mBuilder.setView(mView);
-//        AddChildDialog = mBuilder.create();
-//        AddChildDialog.show();
-//
-//    }
 
     public void OpenEditParentDialog( MainActivity cat){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(this);
@@ -283,7 +191,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
             public void onClick(View v) {
                 if(NewCattv.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(),"Sub Activity Name Can't be Empty",Toast.LENGTH_LONG).show();
-
                 }else{
                     try{
                         SubActivityToUpdate.setSubActivityName(NewCattv.getText().toString());
@@ -294,7 +201,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                         PopulateData();
                     }catch (Exception e){
                         Toast.makeText(getApplicationContext(),"Failed to Edit",Toast.LENGTH_LONG).show();
-
                     }
                 }
             }
@@ -306,15 +212,12 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                 EditChildtDialog.cancel();
             }
         });
-
         mBuilder.setView(mView);
         EditChildtDialog = mBuilder.create();
         EditChildtDialog.show();
     }
 
-
     private  void PopulateData(){
-
         MyData=GetSubCatHash();
         AllCategory=db.mainActivityDao().getAllmainActivities();
         myExpandableAdapter=new MyExpandableAdapter(this,AllCategory,MyData,MainActivityActionStatus,this);
@@ -322,9 +225,7 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         myExpandableAdapter.notifyDataSetChanged();
         if(MyData.isEmpty()){
             Toast.makeText(getApplicationContext(),"Database Is Empty",Toast.LENGTH_LONG).show();
-
         }
-
     }
 
     public HashMap<String,List<SubActivity>> GetSubCatHash(){
@@ -333,16 +234,13 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         for (MainActivity cat:MyCategries){
             List<SubActivity> child_items=db.subActivityDao().GetAllRelatedSubActivities(cat.getMainActivityName());
             MyDataHashMap.put(cat.getMainActivityName(),child_items);
-
         }
         return MyDataHashMap;
     }
 
-
     @Override
     public void ManipulateAction(int type, int group, int child) {
-        /*
-        this method is to determine the action that should be done on the Expandable list
+        /*this method is to determine the action that should be done on the Expandable list
         type: the type of action
              1:edit MainActivity
              2:edit SubActivity
@@ -351,24 +249,17 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
              5:Add new SubActivity to a MainActivity
          group: the group item's position which was clicked
          child: the child item's position which was clicked
-                if the action was performed on group item only , the child will be always Zero 0, that happens when action type is 1 or 3
-
-         */
-
+                if the action was performed on group item only , the child will be always Zero 0, that happens when action type is 1 or 3*/
         switch (type){
             case 1:
-
                 OpenEditParentDialog(AllCategory.get(group));
-
                 break;
 
             case 2:
-
                 OpenEditChildDialog(MyData.get(AllCategory.get(group).getMainActivityName()).get(child));
-
                 break;
-            case 3:
 
+            case 3:
                 try {
                     db.mainActivityDao().delete(AllCategory.get(group));
                     PopulateData();
@@ -379,7 +270,6 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                 break;
 
             case 4 :
-
                 try {
                     db.subActivityDao().delete(MyData.get(AllCategory.get(group).getMainActivityName()).get(child));
                     PopulateData();
@@ -390,11 +280,8 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
                 break;
 
             case 5:
-
            //     OpenAddChildDialog(AllCategory.get(group));
-
                 break;
-
         }
     }
 
@@ -404,5 +291,4 @@ public class TemplateView extends AppCompatActivity implements MyExpandableAdapt
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
 }

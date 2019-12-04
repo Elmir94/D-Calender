@@ -2,6 +2,7 @@ package com.hackerman.dcalender.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.hackerman.dcalender.database.entity.MainActivity;
 import com.hackerman.dcalender.database.entity.SubActivity;
 import com.hackerman.dcalender.database.entity.Template;
 
+import java.util.List;
+
 public class CreateNewTemplate extends AppCompatActivity {
 
     private static final String TAG = "CreateNewTemplate";
@@ -23,6 +26,7 @@ public class CreateNewTemplate extends AppCompatActivity {
     EditText mainActivity;
     EditText subActivity;
     Button saveTemplate;
+    List<MainActivity> MyCategries;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,19 +41,26 @@ public class CreateNewTemplate extends AppCompatActivity {
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
 
+      MyCategries=db.mainActivityDao().getAllmainActivities();
+
         saveTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.d(TAG,"onClick firstName: "+firstName.getText().toString());
-                /*User user = new User(firstName.getText().toString(),lastName.getText().toString(),email.getText().toString());
-                db.userDao().insertAll(user);*/
 
                 //this saves a information to the old database version still needed for displaying activitis in RC-view
-                db.templateDao().insertAll(new Template(mainActivity.getText().toString(),subActivity.getText().toString()));
+                //db.templateDao().insertAll(new Template(mainActivity.getText().toString(),subActivity.getText().toString()));
 
-                //New detabase model
+                //New database model
+                try{
+                    db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
+                }catch (Exception e) {
+                    Log.d(TAG, "This main activity does already exist: " + mainActivity.getText().toString());
+                    //System.out.println(String.format("This main activity does already exist: %s", mainActivity.getText().toString()));
+                }
 
-                db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
+
+
+                //db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
                 db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(),subActivity.getText().toString()));
                 //This is to go from CreateUser view -> Main view
                 startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
