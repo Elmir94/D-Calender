@@ -12,8 +12,10 @@ public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
+
     @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
     private String mainActivityName;
+
     @ColumnInfo(name = "subActivityName")
     private String subActivityName;
 
@@ -22,7 +24,6 @@ public class SubActivity {
         this.subActivityName = subActivityName;
     }
 
-    // TODO: 28/11/2019 add the rest of the relevent columns
 
 
     public int getId() {
@@ -48,4 +49,13 @@ public class SubActivity {
     public void setSubActivityName(String subActivityName) {
         this.subActivityName = subActivityName;
     }
+
+
+    //public String getMainActivityName() {
+    //    return mainActivityName;
+    //}
+
+
+
+
 }

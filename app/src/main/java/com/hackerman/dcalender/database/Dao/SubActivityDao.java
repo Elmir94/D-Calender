@@ -22,9 +22,16 @@ public interface SubActivityDao {
     @Delete
     void delete(SubActivity... subActivities);
 
+
     @Query("SELECT * FROM subActivity")
     List<SubActivity> getAllsubActivityis();
 
+
+    @Query("SELECT * FROM subActivity WHERE mainActivityName = :mainActivityName")
+    public List<SubActivity> GetAllRelatedSubActivities(String mainActivityName);
+
+//    @Query("SELECT * FROM subActivity where mainActivityId = "1"" )
+//    List<SubActivity> getSubActivityName();
 
 //    @Query("SELECT * FROM repo WHERE userId=:userId")
 //    List<Repo> findRepositoriesForUser(final int userId);

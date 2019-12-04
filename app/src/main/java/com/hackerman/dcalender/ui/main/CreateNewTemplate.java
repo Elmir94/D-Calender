@@ -40,7 +40,6 @@ public class CreateNewTemplate extends AppCompatActivity {
         saveTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 25/11/2019 Save to database
                 //Log.d(TAG,"onClick firstName: "+firstName.getText().toString());
                 /*User user = new User(firstName.getText().toString(),lastName.getText().toString(),email.getText().toString());
                 db.userDao().insertAll(user);*/
@@ -49,6 +48,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                 db.templateDao().insertAll(new Template(mainActivity.getText().toString(),subActivity.getText().toString()));
 
                 //New detabase model
+
                 db.mainActivityDao().insertAll(new MainActivity(mainActivity.getText().toString()));
                 db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(),subActivity.getText().toString()));
                 //This is to go from CreateUser view -> Main view
@@ -58,3 +58,4 @@ public class CreateNewTemplate extends AppCompatActivity {
 
     }
 }
+// TODO: 2019-12-02 nfkdgndskngksknsgdnksdgkngsdknkn 
