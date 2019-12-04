@@ -7,12 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e31c74e9-33f4-4742-970f-cc25ba764176" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,13 +45,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="221" column="16" selection-start-line="221" selection-start-column="16" selection-end-line="221" selection-end-column="16" />
+            <state relative-caret-position="289">
+              <caret line="274" column="87" selection-start-line="274" selection-start-column="87" selection-end-line="274" selection-end-column="87" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-                <element signature="e#7283#10375#0" expanded="true" />
-                <element signature="e#10374#10375#0" expanded="true" />
+                <element signature="e#7319#10838#0" expanded="true" />
+                <element signature="e#10837#10838#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -265,7 +260,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49948078" visible="true" weight="0.12278761" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49948078" visible="true" weight="0.12278761" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" sideWeight="0.5005192" side_tool="true" weight="0.1675885" />
       <window_info id="Image Layers" order="4" />
@@ -282,7 +277,7 @@
       <window_info anchor="bottom" id="TODO" order="5" />
       <window_info anchor="bottom" id="Terminal" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005531" side_tool="true" weight="0.32917964" />
-      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.49668142" weight="0.1495327" />
+      <window_info active="true" anchor="bottom" id="Build" order="8" sideWeight="0.49668142" visible="true" weight="0.1495327" />
       <window_info anchor="right" id="Preview" order="0" weight="0.32964602" />
       <window_info anchor="right" id="Device File Explorer" order="1" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="2" />
@@ -390,13 +385,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="221" column="16" selection-start-line="221" selection-start-column="16" selection-end-line="221" selection-end-column="16" />
+        <state relative-caret-position="289">
+          <caret line="274" column="87" selection-start-line="274" selection-start-column="87" selection-end-line="274" selection-end-column="87" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-            <element signature="e#7283#10375#0" expanded="true" />
-            <element signature="e#10374#10375#0" expanded="true" />
+            <element signature="e#7319#10838#0" expanded="true" />
+            <element signature="e#10837#10838#0" expanded="true" />
           </folding>
         </state>
       </provider>

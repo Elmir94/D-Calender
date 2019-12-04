@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private int yDelta;
     ScrollViewHandler verticalScroll;
     private boolean moved = false;
+    private boolean resize = false;
+    private int viewHeight = 0;
 
     //Values for scheduleviews
     private final int schedule_5min = 15;                   //Offset
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void addTask (View view, int yPos) {
         yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
         Button Task = new Button(this);
-        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour));
+        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour);
         Task.setLayoutParams(parameters);
         Task.setBackgroundResource(R.drawable.gradienttaskbg);
         Task.setText("Task");
@@ -139,21 +141,21 @@ public class MainActivity extends AppCompatActivity {
 
             //Lines
             View line = new View(this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5);
             params.setMargins(10,0,0,0);
             line.setLayoutParams(params);
             line.setBackgroundColor(Color.DKGRAY);
             timeStampLinesView.addView(line);
 
             View d1line = new View(this);
-            LinearLayout.LayoutParams d1params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
+            LinearLayout.LayoutParams d1params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5);
             //params.setMargins(10,0,0,schedule_hour - 5);
             d1line.setLayoutParams(d1params);
             d1line.setBackgroundColor(Color.LTGRAY);
             d1Schedule.addView(d1line);
 
             View d2line = new View(this);
-            LinearLayout.LayoutParams d2params = new LinearLayout.LayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5));
+            LinearLayout.LayoutParams d2params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,5);
             //params.setMargins(10,0,0,schedule_hour - 5);
             d2line.setLayoutParams(d2params);
             d2line.setBackgroundColor(Color.LTGRAY);
@@ -227,18 +229,27 @@ public class MainActivity extends AppCompatActivity {
                         case MotionEvent.ACTION_DOWN:
 
                             moved = false;
+                            resize = false;
                             yDelta = (int) view.getY() - y;
+
+                            int height = view.getHeight();
+                            //If bottom of task pressed
+                            if ((int) event.getY() >= (height - (height * 0.2))) {
+                                Snackbar clickMessage = Snackbar.make(view, "Bottom of task pressed", Snackbar.LENGTH_SHORT);
+                                clickMessage.show();
+                                viewHeight = view.getHeight();
+                                resize = true;
+                            }
 
                             verticalScroll.setEnableScrolling(false);
                             break;
 
                         case MotionEvent.ACTION_UP: //Release touch
-                            //Snackbar clickMessage = Snackbar.make(view, "startPos: " + startPos + "  view.getY(): "+ view.getY(), Snackbar.LENGTH_SHORT);
-                            //clickMessage.show();
 
                             if (!moved) {
                                 onTaskClick(view);
-                            } else {
+                            }
+                            else if (!resize) {
                                 view.animate()
                                         .x(0)
                                         .setDuration(0)
@@ -259,11 +270,24 @@ public class MainActivity extends AppCompatActivity {
                                 setPos = schedule_hour * 25 - view.getHeight();
                             }
 
-                            view.animate()
-                                    .x(10)
-                                    .y(setPos)
-                                    .setDuration(0)
-                                    .start();
+                            if (resize) {
+
+                                int newHeight = viewHeight + (setPos - (int)view.getY());
+                                Snackbar clickMessage = Snackbar.make(view, "viewHeight: " + viewHeight, Snackbar.LENGTH_SHORT);
+                                clickMessage.show();
+                                ViewGroup.LayoutParams parameters = view.getLayoutParams();
+                                parameters.height = newHeight;
+                                view.setLayoutParams(parameters);
+
+
+                            }
+                            else {
+                                view.animate()
+                                        .x(20)
+                                        .y(setPos)
+                                        .setDuration(0)
+                                        .start();
+                            }
 
 
                             //view.setLayoutParams(layoutParams);
@@ -271,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                mainLayout.invalidate();
+                //mainLayout.invalidate();
                 return true;
             }
         };
