@@ -32,14 +32,15 @@ public class CreateNewTemplate extends AppCompatActivity {
 
     EditText mainActivity;
     EditText subActivity;
+
     //color
-    ConstraintLayout layout;
     int activityColor;
     FloatingActionButton selectColor;
+
     FloatingActionButton createTask;
-    //buttons
     TextView saveTemplate;
     TextView cancel;
+
     //Variables for db if-statements
     int subActivityId;
     String mainActivityName;
@@ -52,14 +53,14 @@ public class CreateNewTemplate extends AppCompatActivity {
 
         mainActivity = findViewById(R.id.mainActivityEditView);
         subActivity = findViewById(R.id.subActivityEditView);
+
         //color
-        layout = findViewById(R.id.coordinatorLayout);
         activityColor = ContextCompat.getColor(this, R.color.activityBackground);
         selectColor = findViewById(R.id.selectColorFab);
+
         createTask = findViewById(R.id.createTaskFab);
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
-
 
         final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
@@ -77,9 +78,7 @@ public class CreateNewTemplate extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //openColorPicker();
-
                 openColorPicker2();
-
             }
         });
 
@@ -104,9 +103,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                     subActivityId = db.subActivityDao().getSpecificId(mainActivity.getText().toString(), subActivity.getText().toString());
 
                     if (subActivityId > 0) {
-
                         Toast.makeText(getApplicationContext(), "This activity already exists", Toast.LENGTH_LONG).show();
-                        //Log.d(TAG, "This activity already exists");
                     }
                     else {
                         db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor ));
@@ -135,11 +132,8 @@ public class CreateNewTemplate extends AppCompatActivity {
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 activityColor = color;
-                //Test to see that color picker works
-                //layout.setBackgroundColor(activityColor);
                 selectColor.setBackgroundTintList(ColorStateList.valueOf(activityColor));
                 selectColor.setRippleColor(activityColor);
-                //R.color.activityBackground = activityColor;
             }
         });
         colorPicker.show();
@@ -154,13 +148,10 @@ public class CreateNewTemplate extends AppCompatActivity {
             @Override
             public void OnColorClick(View v, int color) {
                 activityColor = color;
-                //Test to see that color picker works
-                //layout.setBackgroundColor(activityColor);
                 selectColor.setBackgroundTintList(ColorStateList.valueOf(activityColor));
                 selectColor.setRippleColor(activityColor);
             }
         });
-        //customize the dialog however you want
         dialog.show();
     }
 
