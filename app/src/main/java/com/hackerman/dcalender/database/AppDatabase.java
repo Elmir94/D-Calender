@@ -11,7 +11,7 @@ import com.hackerman.dcalender.database.entity.SubActivity;
 import com.hackerman.dcalender.database.entity.Template;
 
 
-@Database(entities = {Template.class,MainActivity.class,SubActivity.class}, version = 5)
+@Database(entities = {Template.class,MainActivity.class,SubActivity.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract TemplateDao templateDao();
     public abstract MainActivityDao mainActivityDao();

@@ -1,7 +1,9 @@
 package com.hackerman.dcalender.ui.main;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -14,15 +16,23 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 import com.hackerman.dcalender.R;
 import com.hackerman.dcalender.database.AppDatabase;
 import com.hackerman.dcalender.database.entity.MainActivity;
 import com.hackerman.dcalender.database.entity.SubActivity;
+import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
+import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import petrov.kristiyan.colorpicker.ColorPicker;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNewTemplate extends AppCompatActivity {
 
@@ -30,8 +40,14 @@ public class CreateNewTemplate extends AppCompatActivity {
 
     EditText mainActivity;
     EditText subActivity;
+    //color
+    ConstraintLayout layout;
+    int activityColor;
+    TextView selectColor;
+    //buttons
     TextView saveTemplate;
     TextView cancel;
+    //Variables for db if-statements
     int subActivityId;
     String mainActivityName;
     String subActivityName;
@@ -43,23 +59,39 @@ public class CreateNewTemplate extends AppCompatActivity {
 
         mainActivity = findViewById(R.id.mainActivityEditView);
         subActivity = findViewById(R.id.subActivityEditView);
+        //color
+        layout = findViewById(R.id.coordinatorLayout);
+        activityColor = getResources().getColor(R.color.activityBackground);
+        selectColor = findViewById(R.id.selectColorBtn);
+
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
 
 
-
+        // TODO: 05/12/2019 RoomDatabase migration support
+        // TODO: 05/12/2019 Look for solution to avoid using UI MainThread for database queries
         final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
 
+        selectColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //openColorPicker();
+
+                openColorPicker2();
+
+            }
+        });
+
         saveTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //Saves EditText to strings for use in if-statement
                 mainActivityName = mainActivity.getText().toString();
                 subActivityName = subActivity.getText().toString();
 
-                if(mainActivityName.matches("") && subActivityName.matches("") ) {
+                if(mainActivityName.matches("") || subActivityName.matches("") ) {
                     Toast.makeText(getApplicationContext(), "Enter Main Activity & Sub Activity name!", Toast.LENGTH_LONG).show();
                 }
                 else{
@@ -68,7 +100,6 @@ public class CreateNewTemplate extends AppCompatActivity {
                     }
                     catch (Exception e) {
                         Log.d(TAG, "This main activity does already exist: " + mainActivity.getText().toString());
-                        //System.out.println(String.format("This main activity does already exist: %s", mainActivity.getText().toString()));
                     }
 
                     subActivityId = db.subActivityDao().getSpecificId(mainActivity.getText().toString(), subActivity.getText().toString());
@@ -79,7 +110,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                         //Log.d(TAG, "This activity already exists");
                     }
                     else {
-                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString()));
+                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor ));
                         //CreateNewTemplate view -> ViewTemplates view (saves to database)
                         startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
                     }
@@ -94,7 +125,43 @@ public class CreateNewTemplate extends AppCompatActivity {
                 startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
             }
         });
-
     }
+
+    //Color picker function for AmbilWarna color picker
+    public void openColorPicker() {
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, activityColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) { }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                activityColor = color;
+                //Test to see that color picker works
+                layout.setBackgroundColor(activityColor);
+            }
+        });
+        colorPicker.show();
+    }
+
+    //material ui color picker
+    private void openColorPicker2() {
+        String title = "title";
+        ColorChooserDialog dialog = new ColorChooserDialog(this);
+        dialog.setTitle(title);
+        dialog.setColorListener(new ColorListener() {
+            @Override
+            public void OnColorClick(View v, int color) {
+                activityColor = color;
+                //Test to see that color picker works
+                layout.setBackgroundColor(activityColor);
+            }
+        });
+        //customize the dialog however you want
+        dialog.show();
+    }
+
+    // TODO: 05/12/2019 try this color picker: https://www.youtube.com/watch?v=MZ1GMHzAVPU  
+
+    // TODO: 05/12/2019 try this color picker: https://www.youtube.com/watch?v=GlR7wqWEomU
+
 }
-// TODO: 2019-12-02 nfkdgndskngksknsgdnksdgkngsdknkn 

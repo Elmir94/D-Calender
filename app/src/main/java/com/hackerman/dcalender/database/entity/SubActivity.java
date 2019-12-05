@@ -19,12 +19,14 @@ public class SubActivity {
     @ColumnInfo(name = "subActivityName")
     private String subActivityName;
 
-    public SubActivity(String mainActivityName, String subActivityName) {
+    @ColumnInfo(name = "activityColor")
+    private int activityColor;
+
+    public SubActivity(String mainActivityName, String subActivityName, int activityColor) {
         this.mainActivityName = mainActivityName;
         this.subActivityName = subActivityName;
+        this.activityColor = activityColor;
     }
-
-
 
     public int getId() {
         return id;
@@ -50,6 +52,13 @@ public class SubActivity {
         this.subActivityName = subActivityName;
     }
 
+    public int getActivityColor() {
+        return activityColor;
+    }
+
+    public void setActivityColor(int activityColor) {
+        this.activityColor = activityColor;
+    }
 
     //public String getMainActivityName() {
     //    return mainActivityName;

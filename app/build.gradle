@@ -33,6 +33,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
+    //color picker import ambilwarna by yukuku
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
+
+    //color picker import colorpicker by petrov kristiyan
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+
+    //implementation project(path: ':Material-Color-Picker-master')
+    implementation 'com.turki-alkhateeb:materialcolorpicker:1.0.7'
+
     def room_version = "2.2.2"
 
     implementation "androidx.room:room-runtime:$room_version"
