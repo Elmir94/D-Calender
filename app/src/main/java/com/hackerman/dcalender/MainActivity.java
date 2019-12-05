@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -73,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSidebar(View view)
     {
-        Snackbar clickMessage = Snackbar.make(view, "Opening sidebar", Snackbar.LENGTH_SHORT);
-        clickMessage.show();
+        DrawerLayout navview = (DrawerLayout) findViewById(R.id.NavBar);
+        navview.openDrawer(Gravity.LEFT);
+
+
     }
 
     private void addTask (View view, int yPos) {
