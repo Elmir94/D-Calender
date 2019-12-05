@@ -21,16 +21,20 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     private ViewGroup mainLayout;
+
+    //Values for scheduleviews
+    private final int schedule_5min = 15;                       //Offset
+    private final int schedule_hour = schedule_5min * 12;
+    private int schedule_snap_grid = 4;                         //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
+
+    //Touchhandling
     private int yDelta;
     ScrollViewHandler verticalScroll;
     private boolean moved = false;
     private boolean resize = false;
+    private boolean delete = false;
     private int viewHeight = 0;
-
-    //Values for scheduleviews
-    private final int schedule_5min = 15;                   //Offset
-    private final int schedule_hour = schedule_5min * 12;
-    private int schedule_snap_grid = 4;                     //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
+    private boolean[][] occupiedSpace = new boolean[2][25*schedule_hour];    //For collision check, [day][yPos]
 
 
     @Override
@@ -39,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.schedule);
 
         schedule_snap_grid = schedule_hour / schedule_snap_grid;
+        for (int i = 0; i < occupiedSpace[0].length; i++) {
+            occupiedSpace[0][i] = false;
+            occupiedSpace[1][i] = false;
+        }
 
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
 
         initTouchListeners();
         setupTimestamps();
-        //setupTasks();
+        setupTasks();
 
         ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
         mScrollView.post(new Runnable() {
@@ -64,13 +72,20 @@ public class MainActivity extends AppCompatActivity {
         clickMessage.show();
     }
 
-    public void addTask (View view, int yPos) {
+    public void openSidebar(View view)
+    {
+        Snackbar clickMessage = Snackbar.make(view, "Opening sidebar", Snackbar.LENGTH_SHORT);
+        clickMessage.show();
+    }
+
+    private void addTask (View view, int yPos) {
         yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
         Button Task = new Button(this);
         LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour);
         Task.setLayoutParams(parameters);
         Task.setBackgroundResource(R.drawable.gradienttaskbg);
         Task.setText("Task");
+        Task.setTextColor(Color.WHITE);
         FrameLayout layout = (FrameLayout) findViewById(view.getId());
         layout.addView(Task);
 
@@ -82,12 +97,49 @@ public class MainActivity extends AppCompatActivity {
         Task.setOnTouchListener(onTouchListener());
 
 
+        occupySpace(yPos, yPos + parameters.height, getDayIndex(view.getId()));
     }
 
-    public void openSidebar(View view)
-    {
-        Snackbar clickMessage = Snackbar.make(view, "Opening sidebar", Snackbar.LENGTH_SHORT);
-        clickMessage.show();
+    private void occupySpace (int from, int to, int dayIndex) {
+        for (int i = from; i < to; i++) {
+            occupiedSpace[dayIndex][i] = true;
+        }
+    }
+
+    private void emptySpace (int from, int to, int dayIndex) {
+        for (int i = from; i < to; i++) {
+            occupiedSpace[dayIndex][i] = false;
+        }
+    }
+
+    private boolean checkCollision(int from, int to, int dayIndex) {
+        if (from >= 0 && from < occupiedSpace[dayIndex].length && to >= 0 && to < occupiedSpace[dayIndex].length) {
+            //if (occupiedSpace[dayIndex][from+1] || occupiedSpace[dayIndex][to-1]) {
+            //    return true;
+            //}
+            for (int i = from + 1; i < to - 1; i++) {
+                if (occupiedSpace[dayIndex][i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void putTasksIntoMemory() { //TODO
+
+        LinearLayout schedule = (LinearLayout) findViewById(R.id.schedule);
+
+        FrameLayout day1 = (FrameLayout) findViewById(R.id.daySchedule1);
+        FrameLayout day2 = (FrameLayout) findViewById(R.id.daySchedule2);
+        for (int i = 0; i < day1.getChildCount(); i++) {
+            if (day1.getChildAt(i) instanceof Button) {
+            }
+        }
+        for (int i = 0; i < day2.getChildCount(); i++) {
+            if (day2.getChildAt(i) instanceof Button) {
+            }
+        }
     }
 
     private void initTouchListeners () {
@@ -189,20 +241,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private int getDayIndex(int dayId) {
+        switch (dayId) {
+            case R.id.daySchedule1:
+                return 0;
+
+            case R.id.daySchedule2:
+                return 1;
+        }
+        return -1;
+    }
+
     private void setupTasks() {
         //Fetch from database
 
-
-
-
-        //android:id="@+id/button9"
-        //android:layout_width="match_parent"
-        //android:layout_height="wrap_content"
-        //android:layout_marginTop="100px"
-        //android:height="225px"
-        //android:background="@drawable/gradienttaskbg"
-        //android:onClick="onTaskClick"
-        //android:text="Training" />
+        putTasksIntoMemory();
     }
 
     private OnTouchListener onTouchListener() {
@@ -224,19 +277,22 @@ public class MainActivity extends AppCompatActivity {
 
                 //When Task
                 else {
+                    int dayIndex = getDayIndex(((FrameLayout) view.getParent()).getId());
+
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
 
                         case MotionEvent.ACTION_DOWN:
 
                             moved = false;
                             resize = false;
+                            delete = false;
                             yDelta = (int) view.getY() - y;
 
                             int height = view.getHeight();
+                            emptySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
+
                             //If bottom of task pressed
-                            if ((int) event.getY() >= (height - (height * 0.2))) {
-                                Snackbar clickMessage = Snackbar.make(view, "Bottom of task pressed", Snackbar.LENGTH_SHORT);
-                                clickMessage.show();
+                            if ((int) event.getY() >= (height - (height * 0.30))) {
                                 viewHeight = view.getHeight();
                                 resize = true;
                             }
@@ -249,12 +305,16 @@ public class MainActivity extends AppCompatActivity {
                             if (!moved) {
                                 onTaskClick(view);
                             }
+                            else if (delete) {
+                                ((FrameLayout) view.getParent()).removeView(view);
+                            }
                             else if (!resize) {
                                 view.animate()
                                         .x(0)
                                         .setDuration(0)
                                         .start();
                             }
+                            occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
 
                             verticalScroll.setEnableScrolling(true);
                             break;
@@ -263,30 +323,44 @@ public class MainActivity extends AppCompatActivity {
 
                             int setPos = ((y + yDelta) / schedule_snap_grid) * schedule_snap_grid;
                             moved = true;
+                            delete = false;
+                            int[] positions = new int[2];
+                            view.getLocationOnScreen(positions);
 
-                            if (setPos < schedule_hour) {
-                                setPos = schedule_hour;
-                            } else if (setPos >= schedule_hour * 25 - view.getHeight()) {
-                                setPos = schedule_hour * 25 - view.getHeight();
+                            //Delete on swipe left
+                            if ((int) event.getRawX() - positions[0] < 0) {
+                                delete = true;
+                                view.setAlpha(0.5f);
                             }
 
-                            if (resize) {
+                            else { //Don't delete
+                                view.setAlpha(1);
 
-                                int newHeight = viewHeight + (setPos - (int)view.getY());
-                                Snackbar clickMessage = Snackbar.make(view, "viewHeight: " + viewHeight, Snackbar.LENGTH_SHORT);
-                                clickMessage.show();
-                                ViewGroup.LayoutParams parameters = view.getLayoutParams();
-                                parameters.height = newHeight;
-                                view.setLayoutParams(parameters);
+                                if (setPos < schedule_hour) { //Out of bounds
+                                    setPos = schedule_hour;
+                                } else if (setPos >= schedule_hour * 25 - view.getHeight()) {
+                                    setPos = schedule_hour * 25 - view.getHeight();
+                                }
 
+                                if (resize) {
 
-                            }
-                            else {
-                                view.animate()
-                                        .x(20)
-                                        .y(setPos)
-                                        .setDuration(0)
-                                        .start();
+                                    int newHeight = viewHeight + (setPos - (int) view.getY());
+                                    if (newHeight < schedule_snap_grid) {
+                                        newHeight = schedule_snap_grid;
+                                    }
+                                    ViewGroup.LayoutParams parameters = view.getLayoutParams();
+                                    parameters.height = newHeight;
+                                    view.setLayoutParams(parameters);
+
+                                } else {
+                                    if (!checkCollision(setPos, setPos +view.getHeight(), dayIndex)) {
+                                        view.animate()
+                                                .x(20)
+                                                .y(setPos)
+                                                .setDuration(0)
+                                                .start();
+                                    }
+                                }
                             }
 
 

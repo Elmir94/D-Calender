@@ -5,10 +5,14 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e31c74e9-33f4-4742-970f-cc25ba764176" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,12 +49,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="274" column="87" selection-start-line="274" selection-start-column="87" selection-end-line="274" selection-end-column="87" />
+            <state relative-caret-position="686">
+              <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7319#10838#0" expanded="true" />
-                <element signature="e#10837#10838#0" expanded="true" />
+                <element signature="method#onTaskClick#0;class#MainActivity#0" />
+                <element signature="method#openSidebar#0;class#MainActivity#0" />
+                <element signature="method#initTouchListeners#0;class#MainActivity#0" />
+                <element signature="method#setupTimestamps#0;class#MainActivity#0" />
+                <element signature="e#8836#13688#0" expanded="true" />
+                <element signature="e#13687#13688#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -59,7 +67,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/ScrollViewHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="125">
               <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -69,13 +77,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="516">
-              <caret line="116" column="51" selection-start-line="116" selection-start-column="51" selection-end-line="116" selection-end-column="51" />
+            <state relative-caret-position="85">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
             </state>
           </provider>
-          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="389">
+              <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -137,7 +154,7 @@
     </navigator>
     <panes>
       <pane id="ProjectPane" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -145,11 +162,27 @@
               <item name="D Calender" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
             </path>
+            <path>
+              <item name="D Calender" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="D Calender" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="dcalender" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="D Calender" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -255,29 +288,38 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="60" y="-8" width="1868" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49948078" visible="true" weight="0.12278761" />
-      <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Build Variants" order="3" sideWeight="0.5005192" side_tool="true" weight="0.1675885" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49844238" visible="true" weight="0.12278761" />
+      <window_info id="Structure" order="2" sideWeight="0.50155765" side_tool="true" weight="0.12278761" />
+      <window_info id="Build Variants" order="3" sideWeight="0.501548" side_tool="true" weight="0.12278761" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Resources Explorer" order="7" weight="0.32964602" />
       <window_info id="Favorites" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Find" sideWeight="0.4994469" weight="0.32917964" />
-      <window_info anchor="bottom" id="Logcat" order="0" />
-      <window_info anchor="bottom" id="Debug" order="1" />
+      <window_info anchor="bottom" id="Logcat" order="0" weight="0.32917964" />
+      <window_info anchor="bottom" id="Debug" order="1" weight="0.32917964" />
       <window_info anchor="bottom" id="Android Profiler" order="2" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.32917964" />
       <window_info anchor="bottom" id="Version Control" order="4" />
-      <window_info anchor="bottom" id="TODO" order="5" />
-      <window_info anchor="bottom" id="Terminal" order="6" />
+      <window_info anchor="bottom" id="TODO" order="5" weight="0.32917964" />
+      <window_info anchor="bottom" id="Terminal" order="6" weight="0.32917964" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005531" side_tool="true" weight="0.32917964" />
       <window_info active="true" anchor="bottom" id="Build" order="8" sideWeight="0.49668142" visible="true" weight="0.1495327" />
+      <window_info anchor="bottom" id="Find" order="9" sideWeight="0.4994469" weight="0.32917964" />
       <window_info anchor="right" id="Preview" order="0" weight="0.32964602" />
       <window_info anchor="right" id="Device File Explorer" order="1" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="2" />
@@ -358,16 +400,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_main.xml" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/ScrollViewHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
+        <state relative-caret-position="125">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -375,22 +410,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/Task.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="116" column="51" selection-start-line="116" selection-start-column="51" selection-end-line="116" selection-end-column="51" />
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="274" column="87" selection-start-line="274" selection-start-column="87" selection-end-line="274" selection-end-column="87" />
+        <state relative-caret-position="686">
+          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7319#10838#0" expanded="true" />
-            <element signature="e#10837#10838#0" expanded="true" />
+            <element signature="method#onTaskClick#0;class#MainActivity#0" />
+            <element signature="method#openSidebar#0;class#MainActivity#0" />
+            <element signature="method#initTouchListeners#0;class#MainActivity#0" />
+            <element signature="method#setupTimestamps#0;class#MainActivity#0" />
+            <element signature="e#8836#13688#0" expanded="true" />
+            <element signature="e#13687#13688#0" expanded="true" />
           </folding>
         </state>
       </provider>
