@@ -18,4 +18,13 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="MainActivity">Main activity</string>
+    <string name="subActivity">Sub Avtivity</string>
+    <string name="subCategory">Sub Category</string>
+    <string name="cancel"><u><i>Cancel</i></u></string>
+    <string name="save"><u><i>Save</i></u></string>
+    <string name="selectTaskColor">Task color</string>
+    <string name="createTask">Create task</string>
 </resources>

@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.main.CreateNewTemplate" />
+        <activity android:name=".ui.main.TemplateView"/>
+        <activity android:name=".ui.main.TemplateManager"/>
     </application>
 
 </manifest>

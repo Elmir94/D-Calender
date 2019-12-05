@@ -4,6 +4,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
         applicationId "com.hackerman.dcalender"
         minSdkVersion 21
         targetSdkVersion 28
@@ -41,11 +46,14 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-    //Database
-    def room_version = "2.2.1"
+    //color picker import ambilwarna by yukuku
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
+
+    //implementation project(path: ':Material-Color-Picker-master')
+    implementation 'com.turki-alkhateeb:materialcolorpicker:1.0.7'
+
+    def room_version = "2.2.2"
+
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    testImplementation "androidx.room:room-testing:$room_version"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

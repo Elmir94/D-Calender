@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="ColorWhite">#FFFFFF</color>
-
+    <color name="ButtonText">#FFFFFF</color>
+    <color name="ButtonBackground">#252525</color>
+    <color name="activityBackground">#1467AF</color>
 </resources>
