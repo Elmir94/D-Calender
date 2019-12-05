@@ -43,7 +43,7 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.template_view);
+        setContentView(R.layout.template_manager);
 
         expandableListView=(ExpandableListView)findViewById(R.id.expandablelist);
 
