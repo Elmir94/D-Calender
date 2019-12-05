@@ -139,7 +139,7 @@ public class CreateNewTemplate extends AppCompatActivity {
 
     //material ui color picker
     private void openColorPicker2() {
-        String title = "title";
+        String title = "";
         ColorChooserDialog dialog = new ColorChooserDialog(this);
         dialog.setTitle(title);
         dialog.setColorListener(new ColorListener() {
