@@ -14,9 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -121,11 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean checkCollision(int from, int to, int dayIndex) {
 
+        if ( from > 0 && from < occupiedSpace.length && to > 0 && to < occupiedSpace.length) {
+
             for (int i = from + 1; i < to - 1; i+=schedule_snap_grid) {
                 if (occupiedSpace[dayIndex][i]) {
                     return true;
                 }
             }
+        }
         
         return false;
     }
