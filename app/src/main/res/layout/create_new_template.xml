@@ -39,13 +39,34 @@
             android:importantForAutofill="no"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/selectColorBtn"
+        <LinearLayout
+            android:id="@+id/colorPickerViewLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:text="@string/selectColor"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/selectColorBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="5"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/selectTaskColor"
+
+                android:textSize="28sp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/selectColorFab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#1467AF"
+                android:clickable="true"
+                app:backgroundTint="@color/activityBackground"
+                app:rippleColor="@color/activityBackground" />
+        </LinearLayout>
 
     </LinearLayout>
 

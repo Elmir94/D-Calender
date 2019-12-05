@@ -1,6 +1,7 @@
 package com.hackerman.dcalender.ui.main;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hackerman.dcalender.R;
 import com.hackerman.dcalender.database.AppDatabase;
 import com.hackerman.dcalender.database.entity.MainActivity;
@@ -32,7 +34,7 @@ public class CreateNewTemplate extends AppCompatActivity {
     //color
     ConstraintLayout layout;
     int activityColor;
-    TextView selectColor;
+    FloatingActionButton selectColor;
     //buttons
     TextView saveTemplate;
     TextView cancel;
@@ -51,7 +53,7 @@ public class CreateNewTemplate extends AppCompatActivity {
         //color
         layout = findViewById(R.id.coordinatorLayout);
         activityColor = ContextCompat.getColor(this, R.color.activityBackground);
-        selectColor = findViewById(R.id.selectColorBtn);
+        selectColor = findViewById(R.id.selectColorFab);
 
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
@@ -126,7 +128,10 @@ public class CreateNewTemplate extends AppCompatActivity {
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 activityColor = color;
                 //Test to see that color picker works
-                layout.setBackgroundColor(activityColor);
+                //layout.setBackgroundColor(activityColor);
+                selectColor.setBackgroundTintList(ColorStateList.valueOf(activityColor));
+                selectColor.setRippleColor(activityColor);
+                //R.color.activityBackground = activityColor;
             }
         });
         colorPicker.show();
@@ -142,7 +147,9 @@ public class CreateNewTemplate extends AppCompatActivity {
             public void OnColorClick(View v, int color) {
                 activityColor = color;
                 //Test to see that color picker works
-                layout.setBackgroundColor(activityColor);
+                //layout.setBackgroundColor(activityColor);
+                selectColor.setBackgroundTintList(ColorStateList.valueOf(activityColor));
+                selectColor.setRippleColor(activityColor);
             }
         });
         //customize the dialog however you want
