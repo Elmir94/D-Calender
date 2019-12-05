@@ -10,9 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e31c74e9-33f4-4742-970f-cc25ba764176" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/schedule.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +24,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_XL_API_22" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="L5R0217223000003" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -49,16 +47,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
+            <state relative-caret-position="397">
+              <caret line="128" column="8" lean-forward="true" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#onTaskClick#0;class#MainActivity#0" />
                 <element signature="method#openSidebar#0;class#MainActivity#0" />
                 <element signature="method#initTouchListeners#0;class#MainActivity#0" />
                 <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-                <element signature="e#8836#13688#0" expanded="true" />
-                <element signature="e#13687#13688#0" expanded="true" />
+                <element signature="e#9662#14657#0" expanded="true" />
+                <element signature="e#14656#14657#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,7 +185,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_XL_API_22" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-11-25T04:29:39.063Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-05T02:24:48.106Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/res/drawable" />
@@ -427,16 +425,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="121" column="32" selection-start-line="121" selection-start-column="32" selection-end-line="121" selection-end-column="32" />
+        <state relative-caret-position="397">
+          <caret line="128" column="8" lean-forward="true" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#onTaskClick#0;class#MainActivity#0" />
             <element signature="method#openSidebar#0;class#MainActivity#0" />
             <element signature="method#initTouchListeners#0;class#MainActivity#0" />
             <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-            <element signature="e#8836#13688#0" expanded="true" />
-            <element signature="e#13687#13688#0" expanded="true" />
+            <element signature="e#9662#14657#0" expanded="true" />
+            <element signature="e#14656#14657#0" expanded="true" />
           </folding>
         </state>
       </provider>
