@@ -7,5 +7,6 @@
     <string name="subCategory">Sub Category</string>
     <string name="cancel"><u><i>Cancel</i></u></string>
     <string name="save"><u><i>Save</i></u></string>
-    <string name="selectTaskColor"><u>Select task color</u></string>
+    <string name="selectTaskColor">Task color</string>
+    <string name="createTask">Create task</string>
 </resources>

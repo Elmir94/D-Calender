@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class CreateNewTemplate extends AppCompatActivity {
     ConstraintLayout layout;
     int activityColor;
     FloatingActionButton selectColor;
+    FloatingActionButton createTask;
     //buttons
     TextView saveTemplate;
     TextView cancel;
@@ -54,16 +56,22 @@ public class CreateNewTemplate extends AppCompatActivity {
         layout = findViewById(R.id.coordinatorLayout);
         activityColor = ContextCompat.getColor(this, R.color.activityBackground);
         selectColor = findViewById(R.id.selectColorFab);
-
+        createTask = findViewById(R.id.createTaskFab);
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
 
 
-        // TODO: 05/12/2019 RoomDatabase migration support
-        // TODO: 05/12/2019 Look for solution to avoid using UI MainThread for database queries
         final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
+
+        createTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //getThing
+                Toast.makeText(getApplicationContext(), "thingi will com never", Toast.LENGTH_LONG).show();
+            }
+        });
 
         selectColor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +104,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                     subActivityId = db.subActivityDao().getSpecificId(mainActivity.getText().toString(), subActivity.getText().toString());
 
                     if (subActivityId > 0) {
-                        // TODO: 04/12/2019 refine toast msg
+
                         Toast.makeText(getApplicationContext(), "This activity already exists", Toast.LENGTH_LONG).show();
                         //Log.d(TAG, "This activity already exists");
                     }
