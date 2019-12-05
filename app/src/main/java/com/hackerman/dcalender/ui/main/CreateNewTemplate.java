@@ -1,16 +1,10 @@
 package com.hackerman.dcalender.ui.main;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +21,6 @@ import com.hackerman.dcalender.database.entity.SubActivity;
 import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
 import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import petrov.kristiyan.colorpicker.ColorPicker;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNewTemplate extends AppCompatActivity {
@@ -61,7 +50,7 @@ public class CreateNewTemplate extends AppCompatActivity {
         subActivity = findViewById(R.id.subActivityEditView);
         //color
         layout = findViewById(R.id.coordinatorLayout);
-        activityColor = getResources().getColor(R.color.activityBackground);
+        activityColor = ContextCompat.getColor(this, R.color.activityBackground);
         selectColor = findViewById(R.id.selectColorBtn);
 
         saveTemplate = findViewById(R.id.saveBtn);

@@ -36,9 +36,6 @@ dependencies {
     //color picker import ambilwarna by yukuku
     implementation 'com.github.yukuku:ambilwarna:2.0.1'
 
-    //color picker import colorpicker by petrov kristiyan
-    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
-
     //implementation project(path: ':Material-Color-Picker-master')
     implementation 'com.turki-alkhateeb:materialcolorpicker:1.0.7'
 
