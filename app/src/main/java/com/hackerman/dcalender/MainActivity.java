@@ -14,10 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean resize = false;
     private boolean delete = false;
     private int viewHeight = 0;
-    private boolean[][] occupiedSpace = new boolean[2][25*schedule_hour];    //For collision check, [day][yPos]
+    private boolean[][] occupiedSpace = new boolean[2][(25*schedule_snap_grid)+ 1];    //For collision check, [day][yPos]
 
 
     @Override
@@ -83,14 +83,15 @@ public class MainActivity extends AppCompatActivity {
     private void addTask (View view, int yPos) {
         yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
         Button Task = new Button(this);
-        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, schedule_hour);
-        boolean canSpawn = true;
-
         int height = schedule_hour;
-        while (checkCollision(yPos,yPos + height, getDayIndex(view.getId()))) {
+
+        while (checkCollision(yPos,yPos + height, getDayIndex(view.getId()))
+                || checkOutOfBounds(yPos, (yPos+height))) {
+
             height -= schedule_snap_grid;
-            parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
         }
+
+        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
 
         Task.setLayoutParams(parameters);
         Task.setBackgroundResource(R.drawable.gradienttaskbg);
@@ -111,28 +112,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void occupySpace (int from, int to, int dayIndex) {
-        for (int i = from; i < to; i++) {
+        int fromIndex = from/schedule_snap_grid;
+        int toIndex = to/schedule_snap_grid;
+
+        for (int i = fromIndex; i < toIndex; i++) {
             occupiedSpace[dayIndex][i] = true;
         }
     }
 
     private void emptySpace (int from, int to, int dayIndex) {
-        for (int i = from; i < to; i++) {
+        int fromIndex = from/schedule_snap_grid;
+        int toIndex = to/schedule_snap_grid;
+
+        for (int i = fromIndex; i < toIndex; i++) {
             occupiedSpace[dayIndex][i] = false;
         }
     }
 
     private boolean checkCollision(int from, int to, int dayIndex) {
+        int fromIndex = from/schedule_snap_grid;
+        int toIndex = to/schedule_snap_grid;
 
-        if ( from > 0 && from < occupiedSpace.length && to > 0 && to < occupiedSpace.length) {
+        if (!checkOutOfBounds(from, to)) {
 
-            for (int i = from + 1; i < to - 1; i+=schedule_snap_grid) {
+            for (int i = fromIndex; i < toIndex; i++) {
+
                 if (occupiedSpace[dayIndex][i]) {
                     return true;
                 }
             }
+        } else {
+            return true;
         }
-        
+
+        return false;
+    }
+
+    private boolean checkOutOfBounds (int top, int bottom) {
+        int topIndex = top/schedule_snap_grid;
+        int bottomIndex = bottom/schedule_snap_grid;
+        int maxTopPos = schedule_hour/schedule_snap_grid;
+        int maxBottomPos = (schedule_hour/schedule_snap_grid) * 25;
+
+        //Snackbar clickMessage = Snackbar.make(mainLayout, "TopIndex: "+topIndex+", bottomIndex: "+bottomIndex+", maxTopPos: "+maxTopPos+", maxBottomPos: "+maxBottomPos, Snackbar.LENGTH_SHORT);
+        //clickMessage.show();
+
+        if (maxTopPos > topIndex || bottomIndex > maxBottomPos) {
+            return true;
+        }
         return false;
     }
 
@@ -284,7 +311,9 @@ public class MainActivity extends AppCompatActivity {
                 if (view instanceof FrameLayout) {
 
                     if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
-                        addTask (view, (int) event.getY());
+                        if (!checkOutOfBounds((int) event.getY(), (int) event.getY())) {
+                            addTask (view, (int) event.getY());
+                        }
                     }
                 }
 
@@ -317,7 +346,6 @@ public class MainActivity extends AppCompatActivity {
 
                             if (!moved) {
                                 onTaskClick(view);
-                                occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
                             }
                             else if (delete) {
                                 emptySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
@@ -328,6 +356,9 @@ public class MainActivity extends AppCompatActivity {
                                         .x(0)
                                         .setDuration(0)
                                         .start();
+                                occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
+                            }
+                            else {
                                 occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
                             }
 
@@ -351,33 +382,29 @@ public class MainActivity extends AppCompatActivity {
                             else { //Don't delete
                                 view.setAlpha(1);
 
-                                if (setPos < schedule_hour) { //Out of bounds
-                                    setPos = schedule_hour;
-                                } else if (setPos >= schedule_hour * 25 - view.getHeight()) {
-                                    setPos = schedule_hour * 25 - view.getHeight();
-                                }
-
                                 if (resize) {
 
                                     int newHeight = viewHeight + (setPos - (int) view.getY());
                                     if (newHeight < schedule_snap_grid) {
                                         newHeight = schedule_snap_grid;
                                     }
-                                    if (!checkCollision((int)event.getY(), setPos, dayIndex)) {
+                                    //Snackbar poop = Snackbar.make(view, (int)view.getY()+", "+((int)view.getY()+newHeight)+", 25*hour="+(25*schedule_hour), Snackbar.LENGTH_SHORT);
+                                    //poop.show();
+                                    if (!checkCollision((int)view.getY(), (int)view.getY() + newHeight, dayIndex)) {
                                         ViewGroup.LayoutParams parameters = view.getLayoutParams();
                                         parameters.height = newHeight;
                                         view.setLayoutParams(parameters);
-                                    }
-
-                                } else {
-                                    if (!checkCollision(setPos, setPos +view.getHeight(), dayIndex)) {
-                                        view.animate()
-                                                .x(20)
-                                                .y(setPos)
-                                                .setDuration(0)
-                                                .start();
+                                        //emptySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
                                     }
                                 }
+                                else if (!checkCollision(setPos, setPos +view.getHeight(), dayIndex)) {
+                                    view.animate()
+                                            .x(20)
+                                            .y(setPos)
+                                            .setDuration(0)
+                                            .start();
+                                }
+
                             }
 
 

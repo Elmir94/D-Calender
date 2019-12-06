@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e31c74e9-33f4-4742-970f-cc25ba764176" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,7 +25,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="L5R0217223000003" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_XL_API_22" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -47,16 +48,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="397">
-              <caret line="128" column="8" lean-forward="true" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+            <state relative-caret-position="108">
+              <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#onTaskClick#0;class#MainActivity#0" />
-                <element signature="method#openSidebar#0;class#MainActivity#0" />
+                <element signature="e#1943#2164#0" expanded="true" />
+                <element signature="e#2163#2164#0" expanded="true" />
                 <element signature="method#initTouchListeners#0;class#MainActivity#0" />
                 <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-                <element signature="e#9662#14657#0" expanded="true" />
-                <element signature="e#14656#14657#0" expanded="true" />
+                <element signature="e#11460#16933#0" expanded="true" />
+                <element signature="e#16932#16933#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,12 +86,12 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+          <provider selected="true" editor-type-id="android-designer2" />
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
+            <state relative-caret-position="1989">
+              <caret line="117" selection-start-line="117" selection-end-line="117" />
             </state>
           </provider>
-          <provider selected="true" editor-type-id="android-designer2" />
         </entry>
       </file>
     </leaf>
@@ -111,6 +112,9 @@
       <find>mainLayout</find>
       <find>moving</find>
       <find>LinearLayout</find>
+      <find>occupy</find>
+      <find>emptySpace</find>
+      <find>+1</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -138,8 +142,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="110" />
-    <option name="y" value="-9" />
+    <option name="x" value="199" />
+    <option name="y" value="-12" />
     <option name="width" value="1400" />
     <option name="height" value="1000" />
   </component>
@@ -152,7 +156,6 @@
     </navigator>
     <panes>
       <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -171,21 +174,17 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="dcalender" type="cbb59c9e:AndroidPsiDirectoryNode" />
             </path>
-            <path>
-              <item name="D Calender" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_XL_API_22" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-05T02:24:48.106Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-06T18:56:26.553Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/res/drawable" />
@@ -300,7 +299,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49844238" visible="true" weight="0.12278761" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49844238" visible="true" weight="0.12278761" />
       <window_info id="Structure" order="2" sideWeight="0.50155765" side_tool="true" weight="0.12278761" />
       <window_info id="Build Variants" order="3" sideWeight="0.501548" side_tool="true" weight="0.12278761" />
       <window_info id="Image Layers" order="4" />
@@ -316,7 +315,7 @@
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32917964" />
       <window_info anchor="bottom" id="Terminal" order="6" weight="0.32917964" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005531" side_tool="true" weight="0.32917964" />
-      <window_info active="true" anchor="bottom" id="Build" order="8" sideWeight="0.49668142" visible="true" weight="0.1495327" />
+      <window_info anchor="bottom" id="Build" order="8" sideWeight="0.49668142" visible="true" weight="0.1495327" />
       <window_info anchor="bottom" id="Find" order="9" sideWeight="0.4994469" weight="0.32917964" />
       <window_info anchor="right" id="Preview" order="0" weight="0.32964602" />
       <window_info anchor="right" id="Device File Explorer" order="1" side_tool="true" />
@@ -398,6 +397,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/fragment_main.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/ScrollViewHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="125">
@@ -408,33 +414,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/schedule.xml">
+      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
+        <state relative-caret-position="1989">
+          <caret line="117" selection-start-line="117" selection-end-line="117" />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/hackerman/dcalender/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="128" column="8" lean-forward="true" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+        <state relative-caret-position="108">
+          <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#onTaskClick#0;class#MainActivity#0" />
-            <element signature="method#openSidebar#0;class#MainActivity#0" />
+            <element signature="e#1943#2164#0" expanded="true" />
+            <element signature="e#2163#2164#0" expanded="true" />
             <element signature="method#initTouchListeners#0;class#MainActivity#0" />
             <element signature="method#setupTimestamps#0;class#MainActivity#0" />
-            <element signature="e#9662#14657#0" expanded="true" />
-            <element signature="e#14656#14657#0" expanded="true" />
+            <element signature="e#11460#16933#0" expanded="true" />
+            <element signature="e#16932#16933#0" expanded="true" />
           </folding>
         </state>
       </provider>
