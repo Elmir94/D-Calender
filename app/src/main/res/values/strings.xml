@@ -26,5 +26,5 @@
     <string name="cancel"><u><i>Cancel</i></u></string>
     <string name="save"><u><i>Save</i></u></string>
     <string name="selectTaskColor">Task color</string>
-    <string name="createTask">Create task</string>
+    <string name="addTask">Add task</string>
 </resources>

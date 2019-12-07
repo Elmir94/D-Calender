@@ -42,9 +42,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.weekday1.setText(DateFormat.format("EEEE", dates1.get(position)));
+        holder.weekday1.setText(DateFormat.format("EEE", dates1.get(position)));
         holder.date1.setText(DateFormat.format("dd MMMM", dates1.get(position)));
-        holder.weekday2.setText(DateFormat.format("EEEE", dates2.get(position)));
+        holder.weekday2.setText(DateFormat.format("EEE", dates2.get(position)));
         holder.date2.setText(DateFormat.format("dd MMMM", dates2.get(position)));
     }
 
