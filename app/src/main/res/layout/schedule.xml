@@ -33,56 +33,10 @@
                 android:scaleY="1.5"
                 app:srcCompat="@drawable/ic_menu_black_24dp" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/DayView2Weekday"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:gravity="bottom|center_horizontal"
-                    android:text="@string/dayView2Weekday"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/DayView2Date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/dayView2Date"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/DayView1Weekday"
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:gravity="bottom|center_horizontal"
-                    android:text="@string/dayView1Weekday"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/DayView1Date"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/dayView1Date"
-                    android:textAlignment="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="12sp" />
-            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/datesContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

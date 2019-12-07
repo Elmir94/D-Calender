@@ -16,8 +16,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private final int schedule_5min = 15;                       //Offset
     private final int schedule_hour = schedule_5min * 12;
     private int schedule_snap_grid = 4;                         //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
+    Calendar calendar = Calendar.getInstance();
 
     //Touchhandling
     private int yDelta;
@@ -48,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             occupiedSpace[0][i] = false;
             occupiedSpace[1][i] = false;
         }
+
+        setupDates((Date) calendar.getTime());
 
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
 
@@ -78,6 +89,27 @@ public class MainActivity extends AppCompatActivity {
         navview.openDrawer(Gravity.LEFT);
 
 
+    }
+
+    private void setupDates(Date middleDate) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = findViewById(R.id.datesContainer);
+        recyclerView.setLayoutManager(layoutManager);
+        ArrayList<Date> dates1 = new ArrayList<Date>();
+        ArrayList<Date> dates2 = new ArrayList<Date>();
+        calendar.setTime(middleDate);
+        calendar.add(Calendar.DATE, -10);
+        for (int i = 0; i < 10; i++) {
+            dates1.add(calendar.getTime());
+            calendar.add(Calendar.DATE, 1);
+            dates2.add(calendar.getTime());
+            calendar.add(Calendar.DATE, 1);
+        }
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, dates1, dates2);
+        recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(5);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
     }
 
     private void addTask (View view, int yPos) {
