@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 import static androidx.room.ForeignKey.CASCADE;
 
 //@Entity(tableName = "subActivity")
-@Entity(tableName = "subActivity", foreignKeys = @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName", childColumns = "mainActivityName", onDelete = CASCADE))
+@Entity(tableName = "subActivity", foreignKeys = @ForeignKey(entity = com.hackerman.dcalender.database.entity.MainActivity.class, parentColumns = "mainActivityName", childColumns = "mainActivityName", onDelete = CASCADE))
 public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
