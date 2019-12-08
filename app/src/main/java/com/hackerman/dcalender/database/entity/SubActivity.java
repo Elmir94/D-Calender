@@ -7,13 +7,14 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "subActivity")
+//@Entity(tableName = "subActivity")
+@Entity(tableName = "subActivity", foreignKeys = @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName", childColumns = "mainActivityName", onDelete = CASCADE))
 public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
+    //@ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
     private String mainActivityName;
 
     @ColumnInfo(name = "subActivityName")
