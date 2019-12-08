@@ -7,13 +7,17 @@ import androidx.room.Query;
 
 import com.hackerman.dcalender.database.entity.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface MainActivityDao {
 
     @Query("SELECT * FROM mainActivity")
-        List<MainActivity> getAllmainActivities();
+    List<MainActivity> getAllmainActivities();
+
+    @Query("Select mainActivityName From mainActivity")
+    List<String> getAllMainActivityNames();
 
     @Insert
         void insertAll(MainActivity... mainActivities);

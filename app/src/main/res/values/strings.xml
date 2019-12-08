@@ -3,10 +3,17 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="MainActivity">Main activity</string>
-    <string name="subActivity">Sub Avtivity</string>
+    <string name="subActivity">Sub Activity</string>
     <string name="subCategory">Sub Category</string>
     <string name="cancel"><u><i>Cancel</i></u></string>
     <string name="save"><u><i>Save</i></u></string>
     <string name="selectTaskColor">Task color</string>
     <string name="createTask">Create task</string>
+
+    <string-array name="spinnerItems">
+        <item>Home</item>
+        <item>Work</item>
+        <item>Other</item>
+        <item>Custom</item>
+    </string-array>
 </resources>

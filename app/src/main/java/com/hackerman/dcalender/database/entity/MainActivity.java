@@ -26,4 +26,5 @@ public class MainActivity {
     public void setMainActivityName(String mainActivityName) {
         this.mainActivityName = mainActivityName;
     }
+
 }
