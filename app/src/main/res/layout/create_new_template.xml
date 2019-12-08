@@ -20,23 +20,51 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.032">
 
-        <EditText
-            android:id="@+id/mainActivityEditView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/MainActivity"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/subActivityEditView"
+            <EditText
+                android:id="@+id/mainActivityEditView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/MainActivity"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/mainActivitySpiner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingBottom="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/subActivity"
-            android:importantForAutofill="no"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/subActivityEditView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/subActivity"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/subActivitySpiner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingBottom="5dp"  />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/colorPickerViewLayout"

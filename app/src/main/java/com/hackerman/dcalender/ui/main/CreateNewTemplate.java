@@ -5,14 +5,15 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
@@ -24,24 +25,34 @@ import com.hackerman.dcalender.database.entity.SubActivity;
 import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
 import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
+import java.util.List;
+
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class CreateNewTemplate extends AppCompatActivity {
 
     private static final String TAG = "CreateNewTemplate";
-
+    //mainActivity layout components
     EditText mainActivity;
+    Spinner selectMainActivity;
+    List<String> mainActivityList;
+
+    //subActivity layout components
     EditText subActivity;
+    Spinner selectSubActivity;
+    List<String> subActivityList;
 
     //color
     int activityColor;
     FloatingActionButton selectColor;
 
+    //create task
     FloatingActionButton createTask;
     TextView saveTemplate;
     TextView cancel;
 
-    //Variables for db if-statements
+    //db & variables for db if-statements
+    AppDatabase db;
     int subActivityId;
     String mainActivityName;
     String subActivityName;
@@ -52,8 +63,10 @@ public class CreateNewTemplate extends AppCompatActivity {
         setContentView(R.layout.create_new_template);
 
         mainActivity = findViewById(R.id.mainActivityEditView);
-        subActivity = findViewById(R.id.subActivityEditView);
+        selectMainActivity = findViewById(R.id.mainActivitySpiner);
 
+        subActivity = findViewById(R.id.subActivityEditView);
+        selectSubActivity = findViewById(R.id.subActivitySpiner);
         //color
         activityColor = ContextCompat.getColor(this, R.color.activityBackground);
         selectColor = findViewById(R.id.selectColorFab);
@@ -62,9 +75,57 @@ public class CreateNewTemplate extends AppCompatActivity {
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
 
-        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
+
+        mainActivityList = db.mainActivityDao().getAllMainActivityNames();
+        mainActivityList.add(0, getResources().getString(R.string.selectActivity));
+
+        ArrayAdapter<String> mainSpinnerAdapter = new ArrayAdapter<>(CreateNewTemplate.this, android.R.layout.simple_spinner_item, mainActivityList);
+        mainSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectMainActivity.setAdapter(mainSpinnerAdapter);
+
+        subActivityList = db.subActivityDao().getAllSubActivityNames();
+        subActivityList.add(0, getResources().getString(R.string.selectActivity));
+
+        ArrayAdapter<String> subSpinnerAdapter = new ArrayAdapter<>(CreateNewTemplate.this, android.R.layout.simple_spinner_item, subActivityList);
+        subSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        selectSubActivity.setAdapter(subSpinnerAdapter);
+
+        selectMainActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String spinnerItem = selectMainActivity.getSelectedItem().toString();
+                if(spinnerItem.matches(getResources().getString(R.string.selectActivity))){
+                    mainActivity.setText("");
+                } else {
+                    mainActivity.setText(spinnerItem);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                mainActivity.setText("");
+            }
+        });
+
+        selectSubActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String spinnerItem = selectSubActivity.getSelectedItem().toString();
+                if(spinnerItem.matches(getResources().getString(R.string.selectActivity))){
+                    subActivity.setText("");
+                } else {
+                    subActivity.setText(spinnerItem);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         createTask.setOnClickListener(new View.OnClickListener() {
             @Override
