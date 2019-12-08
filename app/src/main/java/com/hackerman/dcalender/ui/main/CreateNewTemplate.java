@@ -80,14 +80,14 @@ public class CreateNewTemplate extends AppCompatActivity {
                 .build();
 
         mainActivityList = db.mainActivityDao().getAllMainActivityNames();
-        mainActivityList.add(0, getResources().getString(R.string.MainActivity));
+        mainActivityList.add(0, getResources().getString(R.string.selectActivity));
 
         ArrayAdapter<String> mainSpinnerAdapter = new ArrayAdapter<>(CreateNewTemplate.this, android.R.layout.simple_spinner_item, mainActivityList);
         mainSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         selectMainActivity.setAdapter(mainSpinnerAdapter);
 
         subActivityList = db.subActivityDao().getAllSubActivityNames();
-        subActivityList.add(0, getResources().getString(R.string.subActivity));
+        subActivityList.add(0, getResources().getString(R.string.selectActivity));
 
         ArrayAdapter<String> subSpinnerAdapter = new ArrayAdapter<>(CreateNewTemplate.this, android.R.layout.simple_spinner_item, subActivityList);
         subSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -97,7 +97,7 @@ public class CreateNewTemplate extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerItem = selectMainActivity.getSelectedItem().toString();
-                if(spinnerItem.matches(getResources().getString(R.string.MainActivity))){
+                if(spinnerItem.matches(getResources().getString(R.string.selectActivity))){
                     mainActivity.setText("");
                 } else {
                     mainActivity.setText(spinnerItem);
@@ -114,7 +114,7 @@ public class CreateNewTemplate extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerItem = selectSubActivity.getSelectedItem().toString();
-                if(spinnerItem.matches(getResources().getString(R.string.subActivity))){
+                if(spinnerItem.matches(getResources().getString(R.string.selectActivity))){
                     subActivity.setText("");
                 } else {
                     subActivity.setText(spinnerItem);

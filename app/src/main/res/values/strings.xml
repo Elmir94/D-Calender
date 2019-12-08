@@ -4,6 +4,7 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="MainActivity">Main activity</string>
     <string name="subActivity">Sub Activity</string>
+    <string name="selectActivity">Select Activity</string>
     <string name="subCategory">Sub Category</string>
     <string name="cancel"><u><i>Cancel</i></u></string>
     <string name="save"><u><i>Save</i></u></string>
