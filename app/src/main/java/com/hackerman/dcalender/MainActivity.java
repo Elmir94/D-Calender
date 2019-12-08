@@ -1,9 +1,12 @@
 package com.hackerman.dcalender;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -14,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +26,9 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.hackerman.dcalender.ui.main.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private final int schedule_hour = schedule_5min * 12;
     private int schedule_snap_grid = 4;                         //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
     Calendar calendar = Calendar.getInstance();
+    DrawerLayout dl;
 
     //Touchhandling
     private int yDelta;
@@ -45,12 +53,14 @@ public class MainActivity extends AppCompatActivity {
     private boolean delete = false;
     private int viewHeight = 0;
     private boolean[][] occupiedSpace = new boolean[2][(25*schedule_snap_grid)+ 1];    //For collision check, [day][yPos]
-
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
+
+        mContext = this;
 
         schedule_snap_grid = schedule_hour / schedule_snap_grid;
         for (int i = 0; i < occupiedSpace[0].length; i++) {
@@ -72,8 +82,48 @@ public class MainActivity extends AppCompatActivity {
                 mScrollView.scrollTo(0, 7 * schedule_hour);
             }
         });
+
+        createDrawer();
         //Add tasks
 
+    }
+
+    private void createDrawer() {
+
+            ActionBarDrawerToggle t;
+            com.google.android.material.navigation.NavigationView nv;
+
+            dl = (DrawerLayout)findViewById(R.id.NavBar);
+            t = new ActionBarDrawerToggle(this, dl,R.string.dayView2Date, R.string.dayView1Weekday);
+
+            nv = (com.google.android.material.navigation.NavigationView)findViewById(R.id.nv);
+
+            nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    System.out.println("Here\n");
+                    int item = menuItem.getItemId();
+                    switch (item){
+                        //First item in list
+                        case R.id.TaskManager:
+
+                            TemplateManager man = new TemplateManager();
+                            Intent i = new Intent(mContext, man.getClass());
+                            startActivity(i);
+
+                            System.out.println("First item\n");
+                            break;
+
+                        //Second item in list   ... etc
+                        case R.id.settings:
+                            System.out.println("Second item\n");
+                            break;
+
+
+                    }
+                    return false;
+                }
+            });
     }
 
 

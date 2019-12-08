@@ -101,7 +101,7 @@ public class Navigation extends AppCompatActivity  {
         ActionBarDrawerToggle t;
         com.google.android.material.navigation.NavigationView nv;
 
-        dl = (DrawerLayout)findViewById(R.id.main);
+        dl = (DrawerLayout)findViewById(R.id.NavBar);
         t = new ActionBarDrawerToggle(this, dl,R.string.dayView2Date, R.string.dayView1Weekday);
 
         nv = (com.google.android.material.navigation.NavigationView)findViewById(R.id.nv);
