@@ -29,6 +29,7 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
     private static final String TAG = "TemplateView";
 
     FloatingActionButton AddNewMainActivity;
+    FloatingActionButton returnFab;
     ExpandableListView expandableListView;
     MyExpandableAdapter myExpandableAdapter;
     AlertDialog AddParentDialog;
@@ -63,6 +64,13 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(TemplateManager.this, CreateNewTemplate.class));
+            }
+        });
+        returnFab=findViewById(R.id.fab_Back);
+        returnFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TemplateManager.this, com.hackerman.dcalender.MainActivity.class));
             }
         });
 
