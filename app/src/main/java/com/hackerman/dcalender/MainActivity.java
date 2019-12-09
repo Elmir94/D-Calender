@@ -39,11 +39,16 @@ public class MainActivity extends AppCompatActivity {
     private ViewGroup mainLayout;
 
     //Values for scheduleviews
-    private final int schedule_5min = 15;                       //Offset
-    private final int schedule_hour = schedule_5min * 12;
-    private int schedule_snap_grid = 4;                         //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
+    public final int schedule_5min = 15;                       //Offset
+    public final int schedule_hour = schedule_5min * 12;
+    public int schedule_snap_grid = 4;                         //2=30min, 4=15min, 6=10min, 12=5min (Hour divider)
     Calendar calendar = Calendar.getInstance();
     DrawerLayout dl;
+    ArrayList<Date> dates1 = new ArrayList<Date>();
+    ArrayList<Date> dates2 = new ArrayList<Date>();
+    int recyclerViewPos;
+    ArrayList<Task> tasks1 = new ArrayList<Task>();
+    ArrayList<Task> tasks2 = new ArrayList<Task>();
 
     //Touchhandling
     private int yDelta;
@@ -69,12 +74,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setupDates((Date) calendar.getTime());
-
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
-
         setupTimestamps();
         setupTasks();
-
         ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
         mScrollView.post(new Runnable() {
             public void run() {
@@ -90,40 +92,40 @@ public class MainActivity extends AppCompatActivity {
 
     private void createDrawer() {
 
-            ActionBarDrawerToggle t;
-            com.google.android.material.navigation.NavigationView nv;
+        ActionBarDrawerToggle t;
+        com.google.android.material.navigation.NavigationView nv;
 
-            dl = (DrawerLayout)findViewById(R.id.NavBar);
-            t = new ActionBarDrawerToggle(this, dl,R.string.dayView2Date, R.string.dayView1Weekday);
+        dl = (DrawerLayout)findViewById(R.id.NavBar);
+        t = new ActionBarDrawerToggle(this, dl,R.string.dayView2Date, R.string.dayView1Weekday);
 
-            nv = (com.google.android.material.navigation.NavigationView)findViewById(R.id.nv);
+        nv = (com.google.android.material.navigation.NavigationView)findViewById(R.id.nv);
 
-            nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    System.out.println("Here\n");
-                    int item = menuItem.getItemId();
-                    switch (item){
-                        //First item in list
-                        case R.id.TaskManager:
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                System.out.println("Here\n");
+                int item = menuItem.getItemId();
+                switch (item){
+                    //First item in list
+                    case R.id.TaskManager:
 
-                            TemplateManager man = new TemplateManager();
-                            Intent i = new Intent(mContext, man.getClass());
-                            startActivity(i);
+                        TemplateManager man = new TemplateManager();
+                        Intent i = new Intent(mContext, man.getClass());
+                        startActivity(i);
 
-                            System.out.println("First item\n");
-                            break;
+                        System.out.println("Template Manager\n");
+                        break;
 
-                        //Second item in list   ... etc
-                        case R.id.settings:
-                            System.out.println("Second item\n");
-                            break;
+                    //Second item in list   ... etc
+                    case R.id.settings:
+                        System.out.println("Settings\n");
+                        break;
 
 
-                    }
-                    return false;
                 }
-            });
+                return false;
+            }
+        });
     }
 
 
@@ -137,58 +139,164 @@ public class MainActivity extends AppCompatActivity {
     {
         DrawerLayout navview = (DrawerLayout) findViewById(R.id.NavBar);
         navview.openDrawer(Gravity.LEFT);
-
-
     }
 
     private void setupDates(Date middleDate) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.datesContainer);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<Date> dates1 = new ArrayList<Date>();
-        ArrayList<Date> dates2 = new ArrayList<Date>();
+        dates1.clear();
+        dates2.clear();
         calendar.setTime(middleDate);
         calendar.add(Calendar.DATE, -10);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             dates1.add(calendar.getTime());
             calendar.add(Calendar.DATE, 1);
             dates2.add(calendar.getTime());
             calendar.add(Calendar.DATE, 1);
         }
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, dates1, dates2);
+
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, dates1, dates2);
         recyclerView.setAdapter(adapter);
         recyclerView.scrollToPosition(5);
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //Toast.makeText(MainActivity.this, "Scrolled, dx:"+dx+", dy:"+dy, Toast.LENGTH_SHORT).show();
+                int position = recyclerView.computeHorizontalScrollOffset();
+                int offset = recyclerView.computeHorizontalScrollExtent();
+                if (position % offset == 0) {
+                    saveTasksToMemory(recyclerViewPos);
+                    recyclerViewPos = position / offset;
+                    getTasksFromMemory(recyclerViewPos);
+                }
+            }
+        });
     }
 
-    private void addTask (View view, int yPos) {
-        yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
-        Button Task = new Button(this);
-        int height = schedule_hour;
+    private void saveTasksToMemory(int saveToPos) { //TODO
+        FrameLayout daySchedule1 = (FrameLayout) findViewById(R.id.daySchedule1);
+        FrameLayout daySchedule2 = (FrameLayout) findViewById(R.id.daySchedule2);
 
-        while (checkCollision(yPos,yPos + height, getDayIndex(view.getId()))
-                || checkOutOfBounds(yPos, (yPos+height))) {
+        //TODO: Save to database dates here
 
-            height -= schedule_snap_grid;
+        emptySpace(schedule_hour, schedule_hour*25, 0);
+        for (int i = 0; i < tasks1.size(); i++) {
+            daySchedule1.removeView((View) findViewById(tasks1.get(i).id));
         }
 
+        emptySpace(schedule_hour, schedule_hour*25, 1);
+        for (int i = 0; i < tasks2.size(); i++) {
+            daySchedule2.removeView((View) findViewById(tasks2.get(i).id));
+        }
+
+        tasks1.clear();
+        tasks2.clear();
+    }
+
+    private void getTasksFromMemory(int getFromPos) { //TODO
+        tasks1.add(new Task(
+                "Träning",
+                dates1.get(getFromPos),
+                8.25f,
+                10.75f,
+                "#FF933F"));
+
+        tasks1.add(new Task(
+                "Shopping",
+                dates1.get(getFromPos),
+                12.50f,
+                14.00f,
+                "#ff0080"));
+
+        tasks2.add(new Task(
+                "Mobilutveckling",
+                dates1.get(getFromPos),
+                8f,
+                12f,
+                "#5EB246"));
+
+        loadTask((FrameLayout) findViewById(R.id.daySchedule1), tasks1.get(0));
+        loadTask((FrameLayout) findViewById(R.id.daySchedule1), tasks1.get(1));
+        loadTask((FrameLayout) findViewById(R.id.daySchedule2), tasks2.get(0));
+    }
+
+    private void loadTask (View view, Task task) { //TODO, Add to date ArrayLists
+        int yPos = (int)(task.timeFrom * schedule_hour);
+        Button button = new Button(this);
+        int height = (int)(task.timeTo - task.timeFrom)*schedule_hour;
+
         LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
-
-        Task.setLayoutParams(parameters);
-        Task.setBackgroundResource(R.drawable.gradienttaskbg);
-        Task.setText("Task");
-        Task.setTextColor(Color.WHITE);
+        button.setLayoutParams(parameters);
+        button.setId(task.id);
+        button.setBackgroundColor(Color.parseColor(task.hexColor));
+        button.setText(task.name);
+        button.setTextColor(Color.WHITE);
         FrameLayout layout = (FrameLayout) findViewById(view.getId());
-        layout.addView(Task);
+        layout.addView(button);
 
-        Task.animate()
+        button.animate()
+                .y(0-height)
+                .setDuration(0)
+                .start();
+
+        button.animate()
+                .y(yPos)
+                .setDuration(500)
+                .start();
+
+        button.setOnTouchListener(onTouchListener());
+
+        occupySpace(yPos, yPos + parameters.height, getDayIndex(view.getId()));
+
+    }
+
+    private void addTask (View view, int yPos) { //TODO, Add to date ArrayLists
+        yPos = (yPos / schedule_snap_grid) * schedule_snap_grid;
+        Date day = new Date();
+        if (view.getId() == R.id.daySchedule1) {
+            day = dates1.get(recyclerViewPos);
+        } else {
+            day = dates2.get(recyclerViewPos);
+        }
+
+        Task task = new Task(
+                "New Task",
+                day,
+                (float)yPos/schedule_hour,
+                ((float)yPos/schedule_hour) + 1,
+                "#808080");
+
+        if (view.getId() == R.id.daySchedule1) {
+            tasks1.add(task);
+        } else {
+            tasks2.add(task);
+        }
+
+
+
+        Button button = new Button(this);
+        int height = (int)(task.timeTo - task.timeFrom)*schedule_hour;
+
+        LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+        button.setLayoutParams(parameters);
+        button.setId(task.id);
+        button.setBackgroundColor(Color.parseColor(task.hexColor));
+        button.setText(task.name);
+        button.setTextColor(Color.WHITE);
+        FrameLayout layout = (FrameLayout) findViewById(view.getId());
+        layout.addView(button);
+
+        button.animate()
                 .y(yPos)
                 .setDuration(0)
                 .start();
 
-        Task.setOnTouchListener(onTouchListener());
-
+        button.setOnTouchListener(onTouchListener());
 
         occupySpace(yPos, yPos + parameters.height, getDayIndex(view.getId()));
     }
