@@ -23,10 +23,14 @@ public class SubActivity {
     @ColumnInfo(name = "activityColor")
     private int activityColor;
 
-    public SubActivity(String mainActivityName, String subActivityName, int activityColor) {
+    @ColumnInfo(name = "taskText")
+    private String taskText;
+
+    public SubActivity(String mainActivityName, String subActivityName, int activityColor, String taskText) {
         this.mainActivityName = mainActivityName;
         this.subActivityName = subActivityName;
         this.activityColor = activityColor;
+        this.taskText = taskText;
     }
 
     public int getId() {
@@ -59,6 +63,14 @@ public class SubActivity {
 
     public void setActivityColor(int activityColor) {
         this.activityColor = activityColor;
+    }
+
+    public String getTaskText() {
+        return taskText;
+    }
+
+    public void setTaskText(String taskText) {
+        this.taskText = taskText;
     }
 
     //public String getMainActivityName() {

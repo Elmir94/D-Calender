@@ -13,7 +13,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 
-@Database(entities = {MainActivity.class, SubActivity.class, DBTask.class}, version = 18)
+@Database(entities = {MainActivity.class, SubActivity.class, DBTask.class}, version = 19)
 @TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract MainActivityDao mainActivityDao();

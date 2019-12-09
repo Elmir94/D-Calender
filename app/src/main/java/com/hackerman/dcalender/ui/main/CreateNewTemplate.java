@@ -51,6 +51,10 @@ public class CreateNewTemplate extends AppCompatActivity {
     TextView saveTemplate;
     TextView cancel;
 
+    //taskText
+
+    EditText taskText;
+
     //db & variables for db if-statements
     AppDatabase db;
     int subActivityId;
@@ -72,6 +76,9 @@ public class CreateNewTemplate extends AppCompatActivity {
         selectColor = findViewById(R.id.selectColorFab);
 
         createTask = findViewById(R.id.createTaskFab);
+
+        taskText = findViewById(R.id.taskText);
+
         saveTemplate = findViewById(R.id.saveBtn);
         cancel = findViewById(R.id.cancelBtn);
 
@@ -167,7 +174,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "This activity already exists", Toast.LENGTH_LONG).show();
                     }
                     else {
-                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor ));
+                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor, taskText.getText().toString() ));
                         //CreateNewTemplate view -> ViewTemplates view (saves to database)
                         startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
                     }

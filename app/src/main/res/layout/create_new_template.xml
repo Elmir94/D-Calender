@@ -128,6 +128,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -143,37 +144,51 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/save"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:focusable="true" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/cancel"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
-            android:focusable="true" />
+            android:textSize="24sp" />
 
 
-
-<!--        <Button-->
-<!--            android:id="@+id/saveTemplateBtn"-->
-<!--            style="@style/Widget.AppCompat.Button"-->
-<!--            android:layout_width="72dp"-->
-<!--            android:layout_height="72dp"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:layout_weight="5"-->
-<!--            android:background="@android:drawable/ic_input_add" />-->
+        <!--        <Button-->
+        <!--            android:id="@+id/saveTemplateBtn"-->
+        <!--            style="@style/Widget.AppCompat.Button"-->
+        <!--            android:layout_width="72dp"-->
+        <!--            android:layout_height="72dp"-->
+        <!--            android:layout_marginRight="15dp"-->
+        <!--            android:layout_weight="5"-->
+        <!--            android:background="@android:drawable/ic_input_add" />-->
 
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/taskText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.381" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
