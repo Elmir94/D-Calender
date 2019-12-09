@@ -15,7 +15,7 @@ public class Task {
     public Float timeTo;
     public String hexColor;
 
-    Task (Integer templateID, String name, Date date, Float timeFrom, Float timeTo, String hexColor) {
+    public Task(Integer templateID, String name, Date date, Float timeFrom, Float timeTo, String hexColor) {
         this.id = View.generateViewId();
         this.templateID = templateID;
         this.name = name;
@@ -27,7 +27,7 @@ public class Task {
 
     Task (String name, Date date, Float timeFrom, Float timeTo, String hexColor) {
         this.id = View.generateViewId();
-        this.templateID = -1; //No template
+        this.templateID = 0; //No template
         this.name = name;
         this.date = date;
         this.timeFrom = timeFrom;

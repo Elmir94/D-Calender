@@ -17,6 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.hackerman.dcalender.database.AppDatabase;
+import com.hackerman.dcalender.database.entity.DBTask;
+import com.hackerman.dcalender.ui.main.TemplateManager;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,14 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.hackerman.dcalender.ui.main.TemplateManager;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import androidx.room.Room;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Date> dates1 = new ArrayList<Date>();
     ArrayList<Date> dates2 = new ArrayList<Date>();
     int recyclerViewPos;
-    ArrayList<Task> tasks1 = new ArrayList<Task>();
-    ArrayList<Task> tasks2 = new ArrayList<Task>();
+    List<Task> tasks1 = new ArrayList<Task>();
+    List<Task> tasks2 = new ArrayList<Task>();
+
+    AppDatabase db;
 
     //Touchhandling
     private int yDelta;
@@ -64,6 +70,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
+
+        //database
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasks")
+                .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
+                .build();
+
+        //databaseTasks1 = db.taskDao().findTaskByDate(dates1.get(recyclerViewPos));
+
+
 
         mContext = this;
 
@@ -176,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        getTasksFromMemory(recyclerViewPos);
     }
 
     private void saveTasksToMemory(int saveToPos) { //TODO
@@ -185,12 +201,38 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Save to database dates here
 
         emptySpace(schedule_hour, schedule_hour*25, 0);
+
         for (int i = 0; i < tasks1.size(); i++) {
+            Task temp = tasks1.get(i);
+
+            /*
+            db.taskDao().insertAll(new DBTask(
+                    temp.templateID,
+                    temp.name,
+                    temp.hexColor,
+                    temp.date,
+                    temp.timeFrom,
+                    temp.timeTo));
+
+             */
             daySchedule1.removeView((View) findViewById(tasks1.get(i).id));
         }
 
         emptySpace(schedule_hour, schedule_hour*25, 1);
         for (int i = 0; i < tasks2.size(); i++) {
+            Task temp = tasks2.get(i);
+
+            /*
+            db.taskDao().insertAll(new DBTask(
+                    temp.templateID,
+                    temp.name,
+                    temp.hexColor,
+                    temp.date,
+                    temp.timeFrom,
+                    temp.timeTo));
+
+             */
+
             daySchedule2.removeView((View) findViewById(tasks2.get(i).id));
         }
 
@@ -199,30 +241,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getTasksFromMemory(int getFromPos) { //TODO
-        tasks1.add(new Task(
-                "Träning",
-                dates1.get(getFromPos),
-                8.25f,
-                10.75f,
-                "#FF933F"));
 
-        tasks1.add(new Task(
-                "Shopping",
-                dates1.get(getFromPos),
-                12.50f,
-                14.00f,
-                "#ff0080"));
+        List<DBTask> dbTasks1 = db.taskDao().findTaskByDate(dates1.get(recyclerViewPos));
+        List<DBTask> dbTasks2 = db.taskDao().findTaskByDate(dates2.get(recyclerViewPos));
 
-        tasks2.add(new Task(
-                "Mobilutveckling",
-                dates1.get(getFromPos),
-                8f,
-                12f,
-                "#5EB246"));
+        for (int i = 0; i < dbTasks1.size(); i++) {
+            loadTask((FrameLayout) findViewById(R.id.daySchedule1), dbTasks1.get(i).convertToScheduleTask());
 
-        loadTask((FrameLayout) findViewById(R.id.daySchedule1), tasks1.get(0));
-        loadTask((FrameLayout) findViewById(R.id.daySchedule1), tasks1.get(1));
-        loadTask((FrameLayout) findViewById(R.id.daySchedule2), tasks2.get(0));
+            Task print = dbTasks1.get(i).convertToScheduleTask();
+            Snackbar clickMessage = Snackbar.make(mainLayout,"Id:"+ db.taskDao().getIdOnTimeFrom(), Snackbar.LENGTH_LONG);
+            clickMessage.show();
+            /*Snackbar clickMessage = Snackbar.make(mainLayout,"Name: "+print.name+", ID: "+print.id+
+                    ", HexColor: "+print.hexColor+", Date:"+print.date+", TemplateID: "+print.templateID+
+                    ", From:"+print.timeFrom+", To: "+print.timeTo, Snackbar.LENGTH_LONG);
+            clickMessage.show(); */
+        }
+
+        for (int i = 0; i < dbTasks2.size(); i++) {
+            loadTask((FrameLayout) findViewById(R.id.daySchedule2), dbTasks2.get(i).convertToScheduleTask());
+
+            Task print = dbTasks1.get(i).convertToScheduleTask();
+            Snackbar clickMessage = Snackbar.make(mainLayout,"Name: "+print.name+", ID: "+print.id+
+                    ", HexColor: "+print.hexColor+", Date:"+print.date+", TemplateID: "+print.templateID+
+                    ", From:"+print.timeFrom+", To: "+print.timeTo, Snackbar.LENGTH_LONG);
+            clickMessage.show();
+        }
+        //db.taskDao().insertAll(new com.hackerman.dcalender.database.entity.Task());
     }
 
     private void loadTask (View view, Task task) { //TODO, Add to date ArrayLists
@@ -238,6 +282,12 @@ public class MainActivity extends AppCompatActivity {
         button.setTextColor(Color.WHITE);
         FrameLayout layout = (FrameLayout) findViewById(view.getId());
         layout.addView(button);
+
+        if(view.getId() == R.id.daySchedule1) {
+            tasks1.add(task);
+        } else {
+            tasks2.add(task);
+        }
 
         button.animate()
                 .y(0-height)
@@ -276,6 +326,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             tasks2.add(task);
         }
+
+
+        db.taskDao().insertAll(new DBTask(
+                task.templateID,
+                task.name,
+                task.hexColor,
+                task.date,
+                task.timeFrom,
+                task.timeTo));
 
 
 
