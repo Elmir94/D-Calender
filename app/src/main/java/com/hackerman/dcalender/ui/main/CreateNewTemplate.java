@@ -185,16 +185,14 @@ public class CreateNewTemplate extends AppCompatActivity {
                         String tempDate = date.getText().toString();
 
                         Date currentDate = Calendar.getInstance().getTime();
-                        //android.content.res.Resources$NotFoundException: String resource ID #0x0
-                        String pattern = "dd/MM/yyyy";
+                        String pattern = getResources().getString(R.string.dataFormat);
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
                         String testdate = simpleDateFormat.format(currentDate);
 
                         try {
-                            Date strToDate = new SimpleDateFormat(pattern).parse(testdate);
-                            //Toast.makeText(getApplicationContext(), strToDate, Toast.LENGTH_LONG).show();
+                            Date strToDate = new SimpleDateFormat(pattern).parse(tempDate);
                             Log.d(TAG, "Date!!!!_________ " + strToDate);
-                            System.out.println(testdate+"\t"+strToDate);
+                            System.out.println("Auto cur date from android Calender: "+currentDate+"\tCalender date converted to string: "+testdate+"\tString converted to date:"+strToDate);
 
                         } catch (ParseException e) {
                             e.printStackTrace();

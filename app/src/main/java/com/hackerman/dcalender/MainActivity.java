@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         createDrawer();
         //Add tasks
 
+        System.out.println("____________________________Date________________: "+calendar.getTime());
+
     }
 
     private void createDrawer() {
