@@ -36,6 +36,32 @@ public interface SubActivityDao {
     @Query("SELECT id FROM subActivity WHERE mainActivityName = :mainActivityName and subActivityName = :subActivityName")
     public int getSpecificId(String mainActivityName, String subActivityName);
 
+
+    //test for TemplateView
+    @Query("SELECT subActivityName FROM subActivity WHERE id = :id")
+    public String getSubActivityNameById(int id);
+
+    @Query("SELECT mainActivityName FROM subActivity WHERE id = :id")
+    public String getMainActivityNameById(int id);
+
+    @Query("SELECT activityColor FROM subActivity WHERE id = :id")
+    public int getSubActivityColorById(int id);
+
+    @Query("SELECT timeFrom FROM subActivity WHERE id = :id")
+    public float getTimeFromById(int id);
+
+    @Query("SELECT timeTo FROM subActivity WHERE id = :id")
+    public float getTimeToById(int id);
+
+    @Query("SELECT date FROM subActivity WHERE id = :id")
+    public String getDateById(int id);
+
+    @Query("SELECT taskName FROM subActivity WHERE id = :id")
+    public String getTaskNameById(int id);
+
+    @Query("SELECT taskText FROM subActivity WHERE id = :id")
+    public String getTaskTextById(int id);
+
 //    @Query("SELECT * FROM subActivity where mainActivityId = "1"" )
 //    List<SubActivity> getSubActivityName();
 

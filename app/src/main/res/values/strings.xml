@@ -28,4 +28,12 @@
     <string name="save"><u><i>Save</i></u></string>
     <string name="selectTaskColor">Task color</string>
     <string name="addTask">Add task</string>
+    <string name="taskName">Task Name</string>
+    <string name="timeFrom">Time from</string>
+    <string name="betweenTime">-</string>
+    <string name="timeTo">Time To</string>
+    <string name="enterDate">Enter date</string>
+    <string name="enterTaskDescription">Enter task description</string>
+    <string name="dataFormat">dd/MM/yyyy</string>
+    <string name="dataUserView">DD/MM/YYYY</string>
 </resources>

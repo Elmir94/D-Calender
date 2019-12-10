@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,9 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
     boolean MainActivityActionStatus;
     AlertDialog EditParentDialog;
     AlertDialog EditChildtDialog;
+
+    //test edit
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,7 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
                 return false;
             }
         });
+
     }
 
     public void OpenAddParentDialog(){
@@ -224,8 +229,9 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
             }
         });
         mBuilder.setView(mView);
-        EditChildtDialog = mBuilder.create();
-        EditChildtDialog.show();
+        startActivity(new Intent(TemplateManager.this, TemplateView.class));
+        //EditChildtDialog = mBuilder.create();
+        //EditChildtDialog.show();
     }
 
     private  void PopulateData(){

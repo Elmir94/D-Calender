@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.CreateNewTemplate">
 
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -29,8 +31,8 @@
                 android:id="@+id/mainActivityEditView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
                 android:layout_marginBottom="8dp"
+                android:layout_weight="6"
                 android:hint="@string/MainActivity"
                 android:importantForAutofill="no"
                 android:inputType="text" />
@@ -52,8 +54,8 @@
                 android:id="@+id/subActivityEditView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
                 android:layout_marginBottom="8dp"
+                android:layout_weight="6"
                 android:hint="@string/subActivity"
                 android:importantForAutofill="no"
                 android:inputType="text" />
@@ -63,7 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingBottom="5dp"  />
+                android:paddingBottom="5dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,106 +91,140 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="#1467AF"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="#1467AF"
                 app:backgroundTint="@color/activityBackground"
-                app:rippleColor="@color/activityBackground"/>
+                app:rippleColor="@color/activityBackground" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/createTaskLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/CreateTaskTextView"
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/timeFromEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="5"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="@string/addTask"
-                android:textSize="28sp" />
+                android:layout_weight="3"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/timeFrom"
+                android:inputType="time"
+                app:met_mask="##.##"
+                tools:targetApi="o" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/createTaskFab"
+            <TextView
+                android:id="@+id/betweenTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                app:srcCompat="@android:drawable/ic_input_add" />
+                android:text="@string/betweenTime"
+                android:textAlignment="center"
+                android:textSize="28sp" />
+
+            <com.santalu.maskedittext.MaskEditText
+                android:id="@+id/timeToEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/timeTo"
+                android:inputType="time"
+                app:met_mask="##.##"
+                tools:targetApi="o" />
         </LinearLayout>
 
+        <com.santalu.maskedittext.MaskEditText
+            android:id="@+id/dateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/enterDate"
+            android:inputType="date"
+            app:met_mask="##/##/####"
+            tools:targetApi="o" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/editTaskLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.936">
+            <EditText
+                android:id="@+id/taskNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/taskName"
+                android:inputType="text"
+                android:paddingTop="5dp"
+                android:textSize="18sp"
+                android:autofillHints="" tools:targetApi="o" />
 
-        <TextView
-            android:id="@+id/saveBtn"
+            <EditText
+                android:id="@+id/taskText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="top|start"
+                android:hint="@string/enterTaskDescription"
+                android:inputType="textMultiLine"
+                android:lines="12"
+                android:maxLines="12"
+                android:minLines="1"
+                android:autofillHints="" tools:targetApi="o" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/saveAndDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/save"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
+            android:layout_gravity="bottom|center"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
 
-        <TextView
-            android:id="@+id/cancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/cancel"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24sp" />
+            <TextView
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/save"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
 
-
-        <!--        <Button-->
-        <!--            android:id="@+id/saveTemplateBtn"-->
-        <!--            style="@style/Widget.AppCompat.Button"-->
-        <!--            android:layout_width="72dp"-->
-        <!--            android:layout_height="72dp"-->
-        <!--            android:layout_marginRight="15dp"-->
-        <!--            android:layout_weight="5"-->
-        <!--            android:background="@android:drawable/ic_input_add" />-->
+            <TextView
+                android:id="@+id/cancelBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+        </LinearLayout>
 
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/taskText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.381" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--        <Button-->
+            <!--            android:id="@+id/saveTemplateBtn"-->
+            <!--            style="@style/Widget.AppCompat.Button"-->
+            <!--            android:layout_width="72dp"-->
+            <!--            android:layout_height="72dp"-->
+            <!--            android:layout_marginRight="15dp"-->
+            <!--            android:layout_weight="5"-->
+            <!--            android:background="@android:drawable/ic_input_add" />-->
+
+

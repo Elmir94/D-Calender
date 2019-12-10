@@ -23,13 +23,29 @@ public class SubActivity {
     @ColumnInfo(name = "activityColor")
     private int activityColor;
 
+    @ColumnInfo(name = "timeFrom")
+    private float timeFrom;
+
+    @ColumnInfo(name = "timeTo")
+    private float timeTo;
+
+    @ColumnInfo(name = "date")
+    private String date;
+
+    @ColumnInfo(name = "taskName")
+    private String taskName;
+
     @ColumnInfo(name = "taskText")
     private String taskText;
 
-    public SubActivity(String mainActivityName, String subActivityName, int activityColor, String taskText) {
+    public SubActivity(String mainActivityName, String subActivityName, int activityColor, float timeFrom, float timeTo, String date, String taskName, String taskText) {
         this.mainActivityName = mainActivityName;
         this.subActivityName = subActivityName;
         this.activityColor = activityColor;
+        this.timeFrom = timeFrom;
+        this.timeTo = timeTo;
+        this.date = date;
+        this.taskName = taskName;
         this.taskText = taskText;
     }
 
@@ -65,6 +81,38 @@ public class SubActivity {
         this.activityColor = activityColor;
     }
 
+    public float getTimeFrom() {
+        return timeFrom;
+    }
+
+    public void setTimeFrom(float timeFrom) {
+        this.timeFrom = timeFrom;
+    }
+
+    public float getTimeTo() {
+        return timeTo;
+    }
+
+    public void setTimeTo(float timeTo) {
+        this.timeTo = timeTo;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
     public String getTaskText() {
         return taskText;
     }
@@ -72,12 +120,4 @@ public class SubActivity {
     public void setTaskText(String taskText) {
         this.taskText = taskText;
     }
-
-    //public String getMainActivityName() {
-    //    return mainActivityName;
-    //}
-
-
-
-
 }

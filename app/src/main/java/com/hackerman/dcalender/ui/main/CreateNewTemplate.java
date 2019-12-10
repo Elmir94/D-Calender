@@ -25,6 +25,11 @@ import com.hackerman.dcalender.database.entity.SubActivity;
 import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
 import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -46,14 +51,18 @@ public class CreateNewTemplate extends AppCompatActivity {
     int activityColor;
     FloatingActionButton selectColor;
 
-    //create task
-    FloatingActionButton createTask;
+    //time & date
+    EditText timeFrom;
+    EditText timeTo;
+    EditText date;
+
+    //task name & text
+    EditText taskName;
+    EditText taskText;
+
+    // save & cancel
     TextView saveTemplate;
     TextView cancel;
-
-    //taskText
-
-    EditText taskText;
 
     //db & variables for db if-statements
     AppDatabase db;
@@ -75,8 +84,12 @@ public class CreateNewTemplate extends AppCompatActivity {
         activityColor = ContextCompat.getColor(this, R.color.activityBackground);
         selectColor = findViewById(R.id.selectColorFab);
 
-        createTask = findViewById(R.id.createTaskFab);
+        timeFrom = findViewById(R.id.timeFromEditText);
+        timeTo = findViewById(R.id.timeToEditText);
+        date = findViewById(R.id.dateEditText);
 
+        //task name & text
+        taskName =  findViewById(R.id.taskNameEditText);
         taskText = findViewById(R.id.taskText);
 
         saveTemplate = findViewById(R.id.saveBtn);
@@ -134,13 +147,6 @@ public class CreateNewTemplate extends AppCompatActivity {
             }
         });
 
-        createTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //getThing
-                Toast.makeText(getApplicationContext(), "thingi will com never", Toast.LENGTH_LONG).show();
-            }
-        });
 
         selectColor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,9 +180,32 @@ public class CreateNewTemplate extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "This activity already exists", Toast.LENGTH_LONG).show();
                     }
                     else {
-                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor, taskText.getText().toString() ));
+                        float tempTimeFrom = Float.parseFloat(timeFrom.getText().toString());
+                        float tempTimeTo = Float.parseFloat(timeTo.getText().toString());
+                        String tempDate = date.getText().toString();
+
+                        Date currentDate = Calendar.getInstance().getTime();
+                        //android.content.res.Resources$NotFoundException: String resource ID #0x0
+                        String pattern = "dd/MM/yyyy";
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+                        String testdate = simpleDateFormat.format(currentDate);
+
+                        try {
+                            Date strToDate = new SimpleDateFormat(pattern).parse(testdate);
+                            //Toast.makeText(getApplicationContext(), strToDate, Toast.LENGTH_LONG).show();
+                            Log.d(TAG, "Date!!!!_________ " + strToDate);
+                            System.out.println(testdate+"\t"+strToDate);
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        // String currentDate = DateFormat.getDateInstance().format(helo);
+
+                        db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor,
+                                tempTimeFrom,tempTimeTo ,testdate,taskName.getText().toString(),taskText.getText().toString()));
                         //CreateNewTemplate view -> ViewTemplates view (saves to database)
-                        startActivity(new Intent(CreateNewTemplate.this, TemplateView.class));
+                        startActivity(new Intent(CreateNewTemplate.this, TemplateManager.class));
                     }
                 }
             }
