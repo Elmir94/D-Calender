@@ -1,0 +1,146 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 19,
+    "identityHash": "fa412fcebdc6f95cec4376d65aa29a28",
+    "entities": [
+      {
+        "tableName": "mainActivity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mainActivityName` TEXT NOT NULL, PRIMARY KEY(`mainActivityName`))",
+        "fields": [
+          {
+            "fieldPath": "mainActivityName",
+            "columnName": "mainActivityName",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "mainActivityName"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "subActivity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mainActivityName` TEXT, `subActivityName` TEXT, `activityColor` INTEGER NOT NULL, `taskText` TEXT, FOREIGN KEY(`mainActivityName`) REFERENCES `mainActivity`(`mainActivityName`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mainActivityName",
+            "columnName": "mainActivityName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subActivityName",
+            "columnName": "subActivityName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "activityColor",
+            "columnName": "activityColor",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskText",
+            "columnName": "taskText",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "mainActivity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "mainActivityName"
+            ],
+            "referencedColumns": [
+              "mainActivityName"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "dbtask",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `templateID` INTEGER NOT NULL, `taskName` TEXT, `taskColor` TEXT, `date` INTEGER, `timeFrom` REAL, `timeTo` REAL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "subTemplateId",
+            "columnName": "templateID",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "taskName",
+            "columnName": "taskName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "activityColor",
+            "columnName": "taskColor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timeFrom",
+            "columnName": "timeFrom",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timeTo",
+            "columnName": "timeTo",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fa412fcebdc6f95cec4376d65aa29a28')"
+    ]
+  }
+}
