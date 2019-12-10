@@ -192,7 +192,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                         try {
                             Date strToDate = new SimpleDateFormat(pattern).parse(tempDate);
                             Log.d(TAG, "Date!!!!_________ " + strToDate);
-                            System.out.println("Auto cur date from android Calender: "+currentDate+"\tCalender date converted to string: "+testdate+"\tString converted to date:"+strToDate);
+                            System.out.println("Auto cur date from android Calender: "+currentDate+"\tCalender date converted to string: "+tempDate+"\tString converted to date:"+strToDate);
 
                         } catch (ParseException e) {
                             e.printStackTrace();
@@ -201,7 +201,7 @@ public class CreateNewTemplate extends AppCompatActivity {
                         // String currentDate = DateFormat.getDateInstance().format(helo);
 
                         db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor,
-                                tempTimeFrom,tempTimeTo ,testdate,taskName.getText().toString(),taskText.getText().toString()));
+                                tempTimeFrom,tempTimeTo ,tempDate,taskName.getText().toString(),taskText.getText().toString()));
                         //CreateNewTemplate view -> ViewTemplates view (saves to database)
                         startActivity(new Intent(CreateNewTemplate.this, TemplateManager.class));
                     }
