@@ -8,7 +8,6 @@
     tools:context=".ui.main.CreateNewTemplate">
 
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -159,16 +158,18 @@
                 android:id="@+id/taskNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:hint="@string/taskName"
                 android:inputType="text"
                 android:paddingTop="5dp"
                 android:textSize="18sp"
-                android:autofillHints="" tools:targetApi="o" />
+                tools:targetApi="o" />
 
             <EditText
                 android:id="@+id/taskText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
                 android:gravity="top|start"
                 android:hint="@string/enterTaskDescription"
@@ -176,7 +177,7 @@
                 android:lines="12"
                 android:maxLines="12"
                 android:minLines="1"
-                android:autofillHints="" tools:targetApi="o" />
+                tools:targetApi="o" />
 
         </LinearLayout>
 

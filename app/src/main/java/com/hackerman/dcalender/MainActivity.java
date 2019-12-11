@@ -17,17 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.hackerman.dcalender.database.AppDatabase;
-import com.hackerman.dcalender.database.entity.DBTask;
-import com.hackerman.dcalender.ui.main.TemplateManager;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +26,20 @@ import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 import androidx.room.Room;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.hackerman.dcalender.database.AppDatabase;
+import com.hackerman.dcalender.database.AppDatabase;
+import com.hackerman.dcalender.database.entity.SubActivity;
+import com.hackerman.dcalender.ui.main.DeepTaskView;
+import com.hackerman.dcalender.ui.main.TemplateManager;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,13 +75,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.schedule);
 
         //database
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tasks")
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
                 .build();
-
-        //databaseTasks1 = db.taskDao().findTaskByDate(dates1.get(recyclerViewPos));
-
-
 
         mContext = this;
 
@@ -150,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
     {
         Snackbar clickMessage = Snackbar.make(view, "Redirected to deep task view", Snackbar.LENGTH_SHORT);
         clickMessage.show();
+        Intent intent = new Intent(this, DeepTaskView.class);
+
+        intent.putExtra("taskID", view.getId());
+        startActivity(intent);
     }
 
     public void openSidebar(View view)
@@ -244,8 +247,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTasksFromMemory(int getFromPos) { //TODO
 
-        List<DBTask> dbTasks1 = db.taskDao().findTaskByDate(dates1.get(recyclerViewPos));
-        List<DBTask> dbTasks2 = db.taskDao().findTaskByDate(dates2.get(recyclerViewPos));
+        SimpleDateFormat dateFormat = new SimpleDateFormat(R.string.dataFormat);
+        String dbDateString1 = dateFormat.format(dates1.get(recyclerViewPos));
+        String dbDateString2 = dateFormat.format(dates2.get(recyclerViewPos));
+
+        //List<com.hackerman.dcalender.database.entity.SubActivity> date1Entires = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString1);
+        //List<com.hackerman.dcalender.database.entity.SubActivity> date2Entires = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString2);
 
         for (int i = 0; i < dbTasks1.size(); i++) {
             loadTask((FrameLayout) findViewById(R.id.daySchedule1), dbTasks1.get(i).convertToScheduleTask());
@@ -316,9 +323,12 @@ public class MainActivity extends AppCompatActivity {
             day = dates2.get(recyclerViewPos);
         }
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat(R.string.dataFormat);
+        String dbDateString = dateFormat.format(day);
+
         Task task = new Task(
                 "New Task",
-                day,
+                dbDateString,
                 (float)yPos/schedule_hour,
                 ((float)yPos/schedule_hour) + 1,
                 "#808080");
@@ -330,13 +340,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        db.taskDao().insertAll(new DBTask(
-                task.templateID,
-                task.name,
-                task.hexColor,
-                task.date,
+        db.subActivityDao().insertAll(new SubActivity(
+                "None",
+                "None",
+                "New Task",
+                "#808080",
                 task.timeFrom,
-                task.timeTo));
+                task.timeTo,
+                task.date,));
+
+        String mainActivityName, String subActivityName, int activityColor, float timeFrom, float timeTo, String date, String taskName, String taskText
 
 
 

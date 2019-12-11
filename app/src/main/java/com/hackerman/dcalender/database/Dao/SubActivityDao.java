@@ -36,6 +36,9 @@ public interface SubActivityDao {
     @Query("SELECT id FROM subActivity WHERE mainActivityName = :mainActivityName and subActivityName = :subActivityName")
     public int getSpecificId(String mainActivityName, String subActivityName);
 
+    @Query("SELECT * FROM subActivity WHERE mainActivityName = :date")
+    public List<SubActivity> getAllSubActivitiesOnDate(String date);
+
 
     //test for TemplateView
     @Query("SELECT subActivityName FROM subActivity WHERE id = :id")

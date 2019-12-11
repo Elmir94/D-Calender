@@ -2,22 +2,33 @@ package com.hackerman.dcalender;
 
 import android.view.View;
 
-import java.util.Date;
-
 public class Task {
     private final int schedule_hour = 180;
 
     public Integer id;
-    public Integer templateID;
+    public String headTemplateID;
+    public String subTemplateID;
     public String name;
-    public Date date;
+    public String date;
     public Float timeFrom;
     public Float timeTo;
     public String hexColor;
 
-    public Task(Integer templateID, String name, Date date, Float timeFrom, Float timeTo, String hexColor) {
+    public Task(){
+        this.id = 0;
+        this.headTemplateID = "None";
+        this.subTemplateID = "None";
+        this.name = "Empty";
+        this.date = "None";
+        this.timeFrom = 0f;
+        this.timeTo = 0f;
+        this.hexColor = "None";
+    }
+
+    public Task(String headTemplateID, String subTemplateID, String name, String date, Float timeFrom, Float timeTo, String hexColor) {
         this.id = View.generateViewId();
-        this.templateID = templateID;
+        this.headTemplateID = headTemplateID;
+        this.subTemplateID = subTemplateID;
         this.name = name;
         this.date = date;
         this.timeFrom = timeFrom;
@@ -25,9 +36,10 @@ public class Task {
         this.hexColor = hexColor;
     }
 
-    Task (String name, Date date, Float timeFrom, Float timeTo, String hexColor) {
+    Task (String name, String date, Float timeFrom, Float timeTo, String hexColor) {
         this.id = View.generateViewId();
-        this.templateID = 0; //No template
+        this.headTemplateID = "None";
+        this.subTemplateID = "None";
         this.name = name;
         this.date = date;
         this.timeFrom = timeFrom;
@@ -38,4 +50,5 @@ public class Task {
     int getHeight(){
         return (int)(timeTo - timeFrom)*schedule_hour;
     }
+
 }
