@@ -36,6 +36,7 @@ import com.hackerman.dcalender.ui.main.TemplateManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -197,8 +198,6 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: Save to database dates here
 
-        emptySpace(schedule_hour, schedule_hour*25, 0);
-
         SimpleDateFormat dateFormat = new SimpleDateFormat(getResources().getString(R.string.dataFormat));
         String dbDateString1 = dateFormat.format(dates1.get(recyclerViewPos));
         String dbDateString2 = dateFormat.format(dates2.get(recyclerViewPos));
@@ -213,6 +212,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < date2Entries.size(); i++) {
             ((FrameLayout) findViewById(R.id.daySchedule2)).removeView((View) findViewById(date2Entries.get(i).getId()));
         }
+        emptySpace(schedule_hour, schedule_hour*25, 0);
     }
 
     private void getTasksFromMemory(int getFromPos) { //TODO
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
         button.setOnTouchListener(onTouchListener());
 
-        occupySpace((int)task.getTimeFrom()*schedule_hour, (int)task.getTimeTo()*schedule_hour, getDayIndex(view.getId()));
+        occupySpace(yPos, yPos+height, getDayIndex(view.getId()));
 
     }
 
