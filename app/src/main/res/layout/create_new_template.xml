@@ -111,7 +111,7 @@
                 android:layout_weight="3"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/timeFrom"
+                android:hint="@string/timeUserView"
                 android:inputType="time"
                 app:met_mask="##.##"
                 tools:targetApi="o" />
@@ -132,7 +132,7 @@
                 android:layout_weight="3"
                 android:autofillHints=""
                 android:ems="10"
-                android:hint="@string/timeTo"
+                android:hint="@string/timeUserView"
                 android:inputType="time"
                 app:met_mask="##.##"
                 tools:targetApi="o" />
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
-            android:hint="@string/enterDate"
+            android:hint="@string/dataUserView"
             android:inputType="date"
             app:met_mask="##/##/####"
             tools:targetApi="o" />

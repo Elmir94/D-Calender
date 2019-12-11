@@ -28,6 +28,7 @@ import java.util.List;
 public class TemplateManager extends AppCompatActivity implements MyExpandableAdapter.MyListManipulate {
 
     private static final String TAG = "TemplateView";
+    public static final String SUB_ACTIVITY_ID = "com.Rensy.createNewTemplate.SUB_ACTIVITY_ID";
 
     FloatingActionButton AddNewMainActivity;
     FloatingActionButton returnFab;
@@ -229,7 +230,9 @@ public class TemplateManager extends AppCompatActivity implements MyExpandableAd
             }
         });
         mBuilder.setView(mView);
-        startActivity(new Intent(TemplateManager.this, TemplateView.class));
+        Intent intent = new Intent(this, TemplateView.class);
+        intent.putExtra(SUB_ACTIVITY_ID, 1);
+        startActivity(intent);
         //EditChildtDialog = mBuilder.create();
         //EditChildtDialog.show();
     }

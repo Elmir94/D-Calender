@@ -26,8 +26,14 @@ public class SubActivity {
     @ColumnInfo(name = "timeFrom")
     private float timeFrom;
 
+    @ColumnInfo(name = "timeFromString")
+    private String timeFromString;
+
     @ColumnInfo(name = "timeTo")
     private float timeTo;
+
+    @ColumnInfo(name = "timeToString")
+    private String timeToString;
 
     @ColumnInfo(name = "date")
     private String date;
@@ -38,12 +44,14 @@ public class SubActivity {
     @ColumnInfo(name = "taskText")
     private String taskText;
 
-    public SubActivity(String mainActivityName, String subActivityName, int activityColor, float timeFrom, float timeTo, String date, String taskName, String taskText) {
+    public SubActivity(String mainActivityName, String subActivityName, int activityColor, float timeFrom, String timeFromString, float timeTo, String timeToString, String date, String taskName, String taskText) {
         this.mainActivityName = mainActivityName;
         this.subActivityName = subActivityName;
         this.activityColor = activityColor;
         this.timeFrom = timeFrom;
+        this.timeFromString = timeFromString;
         this.timeTo = timeTo;
+        this.timeToString = timeToString;
         this.date = date;
         this.taskName = taskName;
         this.taskText = taskText;
@@ -89,12 +97,28 @@ public class SubActivity {
         this.timeFrom = timeFrom;
     }
 
+    public String getTimeFromString() {
+        return timeFromString;
+    }
+
+    public void setTimeFromString(String timeFromString) {
+        this.timeFromString = timeFromString;
+    }
+
     public float getTimeTo() {
         return timeTo;
     }
 
     public void setTimeTo(float timeTo) {
         this.timeTo = timeTo;
+    }
+
+    public String getTimeToString() {
+        return timeToString;
+    }
+
+    public void setTimeToString(String timeToString) {
+        this.timeToString = timeToString;
     }
 
     public String getDate() {

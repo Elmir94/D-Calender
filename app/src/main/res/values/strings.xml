@@ -37,4 +37,6 @@
     <string name="dataFormat">dd/MM/yyyy</string>
     <string name="dataUserView">DD/MM/YYYY</string>
     <string name="dataFormat2">EEE/dd/MMMM</string>
+    <string name="timeUserView">HH/MM</string>
+    <string name="saveUpdate"><u><i>Save Update</i></u></string>
 </resources>

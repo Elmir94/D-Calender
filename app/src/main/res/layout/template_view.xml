@@ -109,7 +109,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/timeFrom"
-                android:inputType="time"
+                android:inputType="text"
                 app:met_mask="##.##"
                 tools:targetApi="o" />
 
@@ -130,7 +130,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/timeTo"
-                android:inputType="time"
+                android:inputType="text"
                 app:met_mask="##.##"
                 tools:targetApi="o" />
         </LinearLayout>
@@ -204,18 +204,38 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#ffffff"
-        android:src="@drawable/add_icon_no_borders"
-        android:textAlignment="center"
-        app:borderWidth="0dp"
-        app:fabCustomSize="60dp" />
+    <LinearLayout
+        android:id="@+id/saveAndDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
 
+        <TextView
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp" />
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -50,8 +50,14 @@ public interface SubActivityDao {
     @Query("SELECT timeFrom FROM subActivity WHERE id = :id")
     public float getTimeFromById(int id);
 
+    @Query("SELECT timeFromString FROM subActivity WHERE id = :id")
+    public String getTimeFromStringById(int id);
+
     @Query("SELECT timeTo FROM subActivity WHERE id = :id")
     public float getTimeToById(int id);
+
+    @Query("SELECT timeToString FROM subActivity WHERE id = :id")
+    public String getTimeToStringById(int id);
 
     @Query("SELECT date FROM subActivity WHERE id = :id")
     public String getDateById(int id);
@@ -61,6 +67,41 @@ public interface SubActivityDao {
 
     @Query("SELECT taskText FROM subActivity WHERE id = :id")
     public String getTaskTextById(int id);
+
+
+
+    @Query("Update subActivity set subActivityName = :newSubActivityName where id = :subActivityId")
+    void updateSubActivityNameOnId(int subActivityId,String newSubActivityName);
+
+    @Query("Update subActivity set mainActivityName = :newMainActivityName where id = :subActivityId")
+    void updateMainActivityNameOnId(int subActivityId ,String newMainActivityName);
+
+    @Query("Update subActivity set activityColor = :newActivityColor where id = :subActivityId")
+    void updateActivityColorOnId(int subActivityId ,int newActivityColor);
+
+    @Query("Update subActivity set timeFrom = :newTimeFrom where id = :subActivityId")
+    void updateTimeFromOnId(int subActivityId ,float newTimeFrom);
+
+    @Query("Update subActivity set timeFromString = :newTimeFromString where id = :subActivityId")
+    void updateTimeFromStringOnId(int subActivityId ,String newTimeFromString);
+
+    @Query("Update subActivity set timeFrom = :newTimeTo where id = :subActivityId")
+    void updateTimeToOnId(int subActivityId ,float newTimeTo);
+
+    @Query("Update subActivity set timeToString = :newTimeToString where id = :subActivityId")
+    void updateTimeToStringOnId(int subActivityId ,String newTimeToString);
+
+    @Query("Update subActivity set date = :newDate where id = :subActivityId")
+    void updateDateOnId(int subActivityId ,String newDate);
+
+    @Query("Update subActivity set taskName = :newTaskName where id = :subActivityId")
+    void updateTaskNameOnId(int subActivityId ,String newTaskName);
+
+    @Query("Update subActivity set taskText = :newTaskText where id = :subActivityId")
+    void updateTaskTextOnId(int subActivityId ,String newTaskText);
+
+//    @Query("Update mainActivity, subActivity,  set mainActivityName = :newMainActivityName where id = :id")
+//    void updaterealtedSubs(int id, String newMainActivityName, String subActivityName, int activityColor, float timeFrom, float timeTo, String date, String taskName, String taskText);
 
 //    @Query("SELECT * FROM subActivity where mainActivityId = "1"" )
 //    List<SubActivity> getSubActivityName();
