@@ -25,7 +25,6 @@ import com.hackerman.dcalender.database.entity.SubActivity;
 import com.turkialkhateeb.materialcolorpicker.ColorChooserDialog;
 import com.turkialkhateeb.materialcolorpicker.ColorListener;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -199,7 +198,6 @@ public class CreateNewTemplate extends AppCompatActivity {
                         }
 
                         // String currentDate = DateFormat.getDateInstance().format(helo);
-
                         db.subActivityDao().insertAll(new SubActivity(mainActivity.getText().toString(), subActivity.getText().toString(), activityColor,
                                 tempTimeFrom,tempTimeTo ,tempDate,taskName.getText().toString(),taskText.getText().toString()));
                         //CreateNewTemplate view -> ViewTemplates view (saves to database)

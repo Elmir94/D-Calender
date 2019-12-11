@@ -24,7 +24,7 @@ public interface SubActivityDao {
 
 
     @Query("SELECT * FROM subActivity")
-    List<SubActivity> getAllsubActivityis();
+    List<SubActivity> getAllsubActivities();
 
     @Query("Select subActivityName From subActivity")
     List<String> getAllSubActivityNames();
@@ -36,8 +36,21 @@ public interface SubActivityDao {
     @Query("SELECT id FROM subActivity WHERE mainActivityName = :mainActivityName and subActivityName = :subActivityName")
     public int getSpecificId(String mainActivityName, String subActivityName);
 
-    @Query("SELECT * FROM subActivity WHERE mainActivityName = :date")
+    @Query("SELECT * FROM subActivity WHERE date = :date")
     public List<SubActivity> getAllSubActivitiesOnDate(String date);
+
+    @Query("SELECT * FROM subActivity WHERE timeFrom = :timeFrom")
+    public SubActivity getSubActivityOnTimeFrom(Float timeFrom);
+
+    @Query("SELECT * FROM subActivity WHERE id = :id")
+    public SubActivity getSubActivityOnId(int id);
+
+
+    @Query("DELETE FROM subActivity WHERE id = :id")
+    public void deleteSubActivityById(int id);
+
+    @Query("UPDATE subActivity SET timeFrom = :timeFrom, timeTo = :timeTo WHERE id = :id")
+    public void updateFromAndToById(Float timeFrom, Float timeTo, int id);
 
 
     //test for TemplateView

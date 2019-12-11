@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,8 +29,6 @@ import androidx.recyclerview.widget.SnapHelper;
 import androidx.room.Room;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-import com.hackerman.dcalender.database.AppDatabase;
 import com.hackerman.dcalender.database.AppDatabase;
 import com.hackerman.dcalender.database.entity.SubActivity;
 import com.hackerman.dcalender.ui.main.DeepTaskView;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Date> dates1 = new ArrayList<Date>();
     ArrayList<Date> dates2 = new ArrayList<Date>();
     int recyclerViewPos;
-    List<Task> tasks1 = new ArrayList<Task>();
-    List<Task> tasks2 = new ArrayList<Task>();
 
     AppDatabase db;
 
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
 
+
         //database
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "production")
                 .allowMainThreadQueries() //Allows database to read & writ on main UI thread. This is a terrible idea DO NOT DO THIS!!!
@@ -87,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
             occupiedSpace[1][i] = false;
         }
 
+        setupTimestamps();
         setupDates((Date) calendar.getTime());
         verticalScroll = (ScrollViewHandler) findViewById(R.id.verticalScroll);
-        setupTimestamps();
         setupTasks();
         ScrollView mScrollView = (ScrollView) findViewById(R.id.verticalScroll);
         mScrollView.post(new Runnable() {
@@ -100,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         createDrawer();
-        //Add tasks
-
-        System.out.println("____________________________Date________________: "+calendar.getTime());
 
     }
 
@@ -147,10 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onTaskClick(View view)
     {
-        Snackbar clickMessage = Snackbar.make(view, "Redirected to deep task view", Snackbar.LENGTH_SHORT);
-        clickMessage.show();
         Intent intent = new Intent(this, DeepTaskView.class);
-
         intent.putExtra("taskID", view.getId());
         startActivity(intent);
     }
@@ -207,96 +199,55 @@ public class MainActivity extends AppCompatActivity {
 
         emptySpace(schedule_hour, schedule_hour*25, 0);
 
-        for (int i = 0; i < tasks1.size(); i++) {
-            Task temp = tasks1.get(i);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(getResources().getString(R.string.dataFormat));
+        String dbDateString1 = dateFormat.format(dates1.get(recyclerViewPos));
+        String dbDateString2 = dateFormat.format(dates2.get(recyclerViewPos));
 
-            /*
-            db.taskDao().insertAll(new DBTask(
-                    temp.templateID,
-                    temp.name,
-                    temp.hexColor,
-                    temp.date,
-                    temp.timeFrom,
-                    temp.timeTo));
+        List<com.hackerman.dcalender.database.entity.SubActivity> date1Entries = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString1);
+        List<com.hackerman.dcalender.database.entity.SubActivity> date2Entries = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString2);
 
-             */
-            daySchedule1.removeView((View) findViewById(tasks1.get(i).id));
+
+        for (int i = 0; i < date1Entries.size(); i++) {
+            ((FrameLayout) findViewById(R.id.daySchedule1)).removeView((View) findViewById(date1Entries.get(i).getId()));
         }
-
-        emptySpace(schedule_hour, schedule_hour*25, 1);
-        for (int i = 0; i < tasks2.size(); i++) {
-            Task temp = tasks2.get(i);
-
-            /*
-            db.taskDao().insertAll(new DBTask(
-                    temp.templateID,
-                    temp.name,
-                    temp.hexColor,
-                    temp.date,
-                    temp.timeFrom,
-                    temp.timeTo));
-
-             */
-
-            daySchedule2.removeView((View) findViewById(tasks2.get(i).id));
+        for (int i = 0; i < date2Entries.size(); i++) {
+            ((FrameLayout) findViewById(R.id.daySchedule2)).removeView((View) findViewById(date2Entries.get(i).getId()));
         }
-
-        tasks1.clear();
-        tasks2.clear();
     }
 
     private void getTasksFromMemory(int getFromPos) { //TODO
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(R.string.dataFormat);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(getResources().getString(R.string.dataFormat));
         String dbDateString1 = dateFormat.format(dates1.get(recyclerViewPos));
         String dbDateString2 = dateFormat.format(dates2.get(recyclerViewPos));
 
-        //List<com.hackerman.dcalender.database.entity.SubActivity> date1Entires = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString1);
-        //List<com.hackerman.dcalender.database.entity.SubActivity> date2Entires = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString2);
+        List<com.hackerman.dcalender.database.entity.SubActivity> date1Entries = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString1);
+        List<com.hackerman.dcalender.database.entity.SubActivity> date2Entries = db.subActivityDao().getAllSubActivitiesOnDate(dbDateString2);
 
-        for (int i = 0; i < dbTasks1.size(); i++) {
-            loadTask((FrameLayout) findViewById(R.id.daySchedule1), dbTasks1.get(i).convertToScheduleTask());
-
-            Task print = dbTasks1.get(i).convertToScheduleTask();
-            Snackbar clickMessage = Snackbar.make(mainLayout,"Id:"+ db.taskDao().getIdOnTimeFrom(), Snackbar.LENGTH_LONG);
-            clickMessage.show();
-            /*Snackbar clickMessage = Snackbar.make(mainLayout,"Name: "+print.name+", ID: "+print.id+
-                    ", HexColor: "+print.hexColor+", Date:"+print.date+", TemplateID: "+print.templateID+
-                    ", From:"+print.timeFrom+", To: "+print.timeTo, Snackbar.LENGTH_LONG);
-            clickMessage.show(); */
+        for (int i = 0; i < date1Entries.size(); i++) {
+            loadTask((FrameLayout) findViewById(R.id.daySchedule1), date1Entries.get(i));
         }
 
-        for (int i = 0; i < dbTasks2.size(); i++) {
-            loadTask((FrameLayout) findViewById(R.id.daySchedule2), dbTasks2.get(i).convertToScheduleTask());
-
-            Task print = dbTasks1.get(i).convertToScheduleTask();
-            Snackbar clickMessage = Snackbar.make(mainLayout,"Name: "+print.name+", ID: "+print.id+
-                    ", HexColor: "+print.hexColor+", Date:"+print.date+", TemplateID: "+print.templateID+
-                    ", From:"+print.timeFrom+", To: "+print.timeTo, Snackbar.LENGTH_LONG);
-            clickMessage.show();
+        for (int i = 0; i < date2Entries.size(); i++) {
+            loadTask((FrameLayout) findViewById(R.id.daySchedule2), date2Entries.get(i));
         }
         //db.taskDao().insertAll(new com.hackerman.dcalender.database.entity.Task());
     }
 
-    private void loadTask (View view, Task task) { //TODO, Add to date ArrayLists
-        int yPos = (int)(task.timeFrom * schedule_hour);
+    private void loadTask (View view, SubActivity task) { //TODO, Add to date ArrayLists
+        int yPos = (int)(task.getTimeFrom() * schedule_hour);
         Button button = new Button(this);
-        int height = (int)(task.timeTo - task.timeFrom)*schedule_hour;
+        int height = (int)(task.getTimeTo() - task.getTimeFrom())*schedule_hour;
 
         LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
         button.setLayoutParams(parameters);
-        button.setId(task.id);
-        button.setBackgroundColor(Color.parseColor(task.hexColor));
-        button.setText(task.name);
+        button.setId(task.getId());
+        Log.i("Color:", Integer.toHexString(task.getActivityColor()));
+        button.setBackgroundColor(task.getActivityColor());
+        button.setText(task.getTaskName());
         button.setTextColor(Color.WHITE);
         FrameLayout layout = (FrameLayout) findViewById(view.getId());
         layout.addView(button);
-
-        if(view.getId() == R.id.daySchedule1) {
-            tasks1.add(task);
-        } else {
-            tasks2.add(task);
-        }
 
         button.animate()
                 .y(0-height)
@@ -308,9 +259,12 @@ public class MainActivity extends AppCompatActivity {
                 .setDuration(500)
                 .start();
 
+        //Snackbar clickMessage = Snackbar.make(view, "Loading task: "+task.getId()+", "+task.getTaskName()+", "+task.getDate(), Snackbar.LENGTH_SHORT);
+        //clickMessage.show();
+
         button.setOnTouchListener(onTouchListener());
 
-        occupySpace(yPos, yPos + parameters.height, getDayIndex(view.getId()));
+        occupySpace((int)task.getTimeFrom()*schedule_hour, (int)task.getTimeTo()*schedule_hour, getDayIndex(view.getId()));
 
     }
 
@@ -323,44 +277,39 @@ public class MainActivity extends AppCompatActivity {
             day = dates2.get(recyclerViewPos);
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(R.string.dataFormat);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(getResources().getString(R.string.dataFormat));
         String dbDateString = dateFormat.format(day);
 
-        Task task = new Task(
-                "New Task",
-                dbDateString,
+
+        SubActivity task = new SubActivity(
+                "",
+                "",
+                -6381922,
                 (float)yPos/schedule_hour,
                 ((float)yPos/schedule_hour) + 1,
-                "#808080");
-
-        if (view.getId() == R.id.daySchedule1) {
-            tasks1.add(task);
-        } else {
-            tasks2.add(task);
-        }
-
-
-        db.subActivityDao().insertAll(new SubActivity(
-                "None",
-                "None",
+                dbDateString,
                 "New Task",
-                "#808080",
-                task.timeFrom,
-                task.timeTo,
-                task.date,));
+                "");
 
-        String mainActivityName, String subActivityName, int activityColor, float timeFrom, float timeTo, String date, String taskName, String taskText
+        db.subActivityDao().insertAll(task);
 
+        task = db.subActivityDao().getSubActivityOnTimeFrom((float)yPos/schedule_hour);
 
 
         Button button = new Button(this);
-        int height = (int)(task.timeTo - task.timeFrom)*schedule_hour;
+
+        int height = schedule_hour;
+        while (checkCollision(yPos,yPos + height, getDayIndex(view.getId()))
+                || checkOutOfBounds(yPos, (yPos+height))) {
+            height -= schedule_snap_grid;
+        }
+
 
         LinearLayout.LayoutParams parameters = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
         button.setLayoutParams(parameters);
-        button.setId(task.id);
-        button.setBackgroundColor(Color.parseColor(task.hexColor));
-        button.setText(task.name);
+        button.setId(task.getId());
+        button.setBackgroundColor(task.getActivityColor());
+        button.setText(task.getTaskName());
         button.setTextColor(Color.WHITE);
         FrameLayout layout = (FrameLayout) findViewById(view.getId());
         layout.addView(button);
@@ -425,24 +374,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
-    }
-
-    private void loadDaysToOccupiedSpace() { //TODO
-
-        LinearLayout schedule = (LinearLayout) findViewById(R.id.schedule);
-
-        FrameLayout day1 = (FrameLayout) findViewById(R.id.daySchedule1);
-        FrameLayout day2 = (FrameLayout) findViewById(R.id.daySchedule2);
-        for (int i = 0; i < day1.getChildCount(); i++) {
-            if (day1.getChildAt(i) instanceof Button) {
-                occupySpace((int)day1.getChildAt(i).getY(), (int)day1.getChildAt(i).getY() + day1.getChildAt(i).getHeight(), 0);
-            }
-        }
-        for (int i = 0; i < day2.getChildCount(); i++) {
-            if (day2.getChildAt(i) instanceof Button) {
-                occupySpace((int)day2.getChildAt(i).getY(), (int)day2.getChildAt(i).getY() + day2.getChildAt(i).getHeight(), 1);
-            }
-        }
     }
 
     private void initTouchListeners () {
@@ -557,8 +488,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupTasks() {
         //Fetch from database
-
-        loadDaysToOccupiedSpace();
         initTouchListeners();
     }
 
@@ -612,6 +541,7 @@ public class MainActivity extends AppCompatActivity {
                                 onTaskClick(view);
                             }
                             else if (delete) {
+                                db.subActivityDao().deleteSubActivityById(view.getId());
                                 emptySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
                                 ((FrameLayout) view.getParent()).removeView(view);
                             }
@@ -621,6 +551,7 @@ public class MainActivity extends AppCompatActivity {
                                         .setDuration(0)
                                         .start();
                                 occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
+                                db.subActivityDao().updateFromAndToById(view.getY()/schedule_hour, (view.getY() + view.getHeight())/schedule_hour, view.getId());
                             }
                             else {
                                 occupySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
@@ -659,6 +590,7 @@ public class MainActivity extends AppCompatActivity {
                                         parameters.height = newHeight;
                                         view.setLayoutParams(parameters);
                                         //emptySpace((int)view.getY(), (int)view.getY() + view.getHeight(), dayIndex);
+                                        db.subActivityDao().updateFromAndToById(view.getY()/schedule_hour, (view.getY() + newHeight)/schedule_hour, view.getId());
                                     }
                                 }
                                 else if (!checkCollision(setPos, setPos +view.getHeight(), dayIndex)) {

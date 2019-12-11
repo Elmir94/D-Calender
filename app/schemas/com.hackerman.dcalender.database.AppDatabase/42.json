@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 22,
-    "identityHash": "6f3f28a682755e1f873d9629640e77a0",
+    "version": 42,
+    "identityHash": "0aad820b0308d80770d7da95377f6040",
     "entities": [
       {
         "tableName": "mainActivity",
@@ -26,7 +26,7 @@
       },
       {
         "tableName": "subActivity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mainActivityName` TEXT, `subActivityName` TEXT, `activityColor` INTEGER NOT NULL, `timeFrom` REAL NOT NULL, `timeTo` REAL NOT NULL, `date` TEXT, `taskName` TEXT, `taskText` TEXT, FOREIGN KEY(`mainActivityName`) REFERENCES `mainActivity`(`mainActivityName`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `mainActivityName` TEXT, `subActivityName` TEXT, `activityColor` INTEGER NOT NULL, `timeFrom` REAL NOT NULL, `timeTo` REAL NOT NULL, `date` TEXT, `taskName` TEXT, `taskText` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -90,25 +90,13 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "mainActivity",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "mainActivityName"
-            ],
-            "referencedColumns": [
-              "mainActivityName"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6f3f28a682755e1f873d9629640e77a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0aad820b0308d80770d7da95377f6040')"
     ]
   }
 }

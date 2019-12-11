@@ -5,16 +5,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 //@Entity(tableName = "subActivity")
-@Entity(tableName = "subActivity", foreignKeys = @ForeignKey(entity = com.hackerman.dcalender.database.entity.MainActivity.class, parentColumns = "mainActivityName", childColumns = "mainActivityName", onDelete = CASCADE))
+@Entity(tableName = "subActivity")
 public class SubActivity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    //@ForeignKey(entity = MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
+    @ForeignKey(entity = com.hackerman.dcalender.database.entity.MainActivity.class, parentColumns = "mainActivityName" , childColumns = "mainActivityName", onDelete = CASCADE)
     private String mainActivityName;
 
     @ColumnInfo(name = "subActivityName")
